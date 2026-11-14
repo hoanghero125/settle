@@ -65,7 +65,11 @@ Tụi em xin làm ngay trên chiếc điện thoại này.
 
 [Vuốt tắt hẳn Settle, rồi mở lại từ màn hình chính]
 
-Đây là app đã cài trên máy. Em vừa tắt hẳn rồi mở lại. Tờ thuế tiếng Nhật em chụp từ trước vẫn nằm ở đây, kèm hạn của nó.
+Đây là app đã cài trên máy. Em vừa tắt hẳn rồi mở lại, và việc cũ vẫn còn nguyên.
+
+[Chỉ vào dòng việc tiếng Nhật trong danh sách, không bấm vào]
+
+Đây là tờ giấy báo thuế tiếng Nhật em chụp lúc nãy. Settle ghi hạn ngày 18 tháng 11 và đánh dấu là cần làm ngay.
 
 [Bấm Chụp giấy tờ, chụp tờ tiếng Hàn trên laptop]
 

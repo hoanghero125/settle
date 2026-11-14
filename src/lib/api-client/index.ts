@@ -3,6 +3,7 @@ import {
   ApiErrorSchema,
   ProcessResponseSchema,
   type ApiErrorCode,
+  type FeedbackRequest,
   type PaperworkAnalysis,
   type ProcessRequest,
   type SpeakRequest,
@@ -87,4 +88,9 @@ export async function speak(text: string, language: string): Promise<string> {
     throw transportError(cause);
   }
   return URL.createObjectURL(audio);
+}
+
+/** Sends only an anonymous verdict; no paper content leaves the device. */
+export async function sendFeedback(verdict: FeedbackRequest["verdict"]): Promise<void> {
+  await post("/api/feedback", { verdict } satisfies FeedbackRequest);
 }

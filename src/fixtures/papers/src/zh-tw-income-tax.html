@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<title>綜合所得稅核定稅額繳款書（範本）</title>
+<style>
+  @page { size: A4; margin: 0; }
+  html, body { margin: 0; padding: 0; background: #fff; }
+  body { font-family: "Noto Sans CJK TC", sans-serif; color: #1b1b1b; font-size: 11.5px; line-height: 1.45; }
+  .page { width: 210mm; height: 297mm; box-sizing: border-box; padding: 9mm 12mm 7mm; position: relative; overflow: hidden; }
+  .serif { font-family: "Noto Serif CJK TC", serif; }
+  .fanben { position: absolute; top: 7mm; right: 12mm; border: 3px solid #c8102e; color: #c8102e; font-weight: 700; font-size: 25px; padding: 0 10px; letter-spacing: 6px; transform: rotate(-8deg); }
+  .head { text-align: center; }
+  .head .org { font-family: "Noto Serif CJK TC", serif; font-size: 15px; letter-spacing: 2px; }
+  h1 { font-family: "Noto Serif CJK TC", serif; font-size: 21px; margin: 1mm 0 0; letter-spacing: 2px; }
+  .head .yr { font-size: 12px; margin-bottom: 3mm; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #7a4b2a; padding: 1.3mm 2.2mm; }
+  th { background: #f6ece2; font-weight: 500; white-space: nowrap; text-align: left; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .sect { font-weight: 700; font-size: 12.5px; margin: 3mm 0 1.2mm; color: #7a4b2a; }
+  .duebox { display: flex; border: 2.5px solid #7a4b2a; margin: 3mm 0; }
+  .duebox > div { flex: 1; padding: 2mm 4mm; }
+  .duebox > div + div { border-left: 1.5px solid #7a4b2a; }
+  .duebox .lbl { font-size: 11.5px; font-weight: 700; color: #7a4b2a; }
+  .duebox .val { font-size: 21px; font-weight: 700; }
+  .duebox .cap { font-size: 11px; }
+  .pay { font-size: 10.5px; margin: 0; padding-left: 5mm; }
+  .small { font-size: 9px; color: #333; margin-top: 2.5mm; line-height: 1.5; }
+  .small ol { margin: 0; padding-left: 4.5mm; }
+  .sign { display: flex; justify-content: flex-end; align-items: center; gap: 3mm; margin-top: 2mm; font-family: "Noto Serif CJK TC", serif; font-size: 13px; }
+  .seal { width: 17mm; height: 17mm; border: 2.5px solid #d0242b; color: #d0242b; display: flex; align-items: center; justify-content: center; transform: rotate(4deg); }
+  .seal span { writing-mode: vertical-rl; font-family: "Noto Serif CJK TC", serif; font-weight: 700; font-size: 12px; line-height: 1.1; height: 3.4em; }
+  .cut { border-top: 1.5px dashed #555; margin: 3.5mm -12mm 0; position: relative; }
+  .cut span { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: #fff; padding: 0 3mm; font-size: 9.5px; color: #555; }
+  .slips { display: flex; margin-top: 4mm; }
+  .slip { flex: 1; border: 1.2px solid #7a4b2a; padding: 1.5mm 2mm; font-size: 9.5px; position: relative; min-height: 44mm; }
+  .slip + .slip { border-left: 1.2px dashed #7a4b2a; }
+  .slip .t { text-align: center; font-weight: 700; font-size: 11px; border-bottom: 1px solid #7a4b2a; margin-bottom: 1mm; }
+  .slip .row { display: flex; justify-content: space-between; border-bottom: 1px dotted #c9a98f; padding: .4mm 0; }
+  .slip .amt { font-size: 14px; font-weight: 700; }
+  .bar { height: 5mm; margin-top: 1mm; background: repeating-linear-gradient(90deg, #000 0 1px, #fff 1px 3px, #000 3px 4px, #fff 4px 6px, #000 6px 8px, #fff 8px 9px); }
+  .bc { font-family: "DejaVu Sans Mono", monospace; font-size: 7.5px; letter-spacing: .5px; }
+  .stamp { position: absolute; right: 3mm; bottom: 3mm; width: 14mm; height: 14mm; border: 1px dashed #7a4b2a; border-radius: 50%; font-size: 7.5px; color: #7a4b2a; display: flex; align-items: center; justify-content: center; text-align: center; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="fanben">範本</div>
+
+  <div class="head">
+    <div class="org">財政部範例國稅局</div>
+    <h1>綜合所得稅核定稅額繳款書</h1>
+    <div class="yr">114年度　（中華民國115年11月10日填發）　繳款書第一聯：收據</div>
+  </div>
+
+  <table>
+    <tr><th>納稅義務人</th><td>阮氏模（NGUYEN THI MAU）</td><th>統一證號</th><td>A900000000</td></tr>
+    <tr><th>居留地址</th><td colspan="3">範例市虛構區示範路100號5樓之3</td></tr>
+    <tr><th>稽徵機關</th><td>財政部範例國稅局 示範分局</td><th>銷帳編號</th><td>0000-1150-0012-3456</td></tr>
+    <tr><th>稅別</th><td>綜合所得稅（核定補徵）</td><th>收款機關</th><td>國庫範例分庫</td></tr>
+  </table>
+
+  <div class="sect">一、核定稅額計算</div>
+  <table>
+    <tr><th>項目</th><th style="text-align:right">金額（新臺幣元）</th><th>項目</th><th style="text-align:right">金額（新臺幣元）</th></tr>
+    <tr><td>綜合所得總額</td><td class="num">812,000</td><td>綜合所得淨額</td><td class="num">366,000</td></tr>
+    <tr><td>減：免稅額</td><td class="num">97,000</td><td>適用稅率</td><td class="num">5%</td></tr>
+    <tr><td>減：標準扣除額</td><td class="num">131,000</td><td>核定應納稅額</td><td class="num">18,300</td></tr>
+    <tr><td>減：薪資所得特別扣除額</td><td class="num">218,000</td><td>減：扣繳及已自繳稅額</td><td class="num">0</td></tr>
+    <tr><td colspan="2" style="font-size:10px">核定說明：申報時漏報範例公司薪資所得，經查核後補徵。</td><td><b>本次應納稅額</b></td><td class="num"><b>18,300</b></td></tr>
+  </table>
+
+  <div class="duebox">
+    <div><div class="lbl">應納稅額</div><div class="val">新臺幣 18,300 元</div><div class="cap">（大寫）壹萬捌仟參佰元整</div></div>
+    <div><div class="lbl">繳納期間</div><div class="cap">自115年11月10日起</div><div class="val">至115年12月01日止</div><div class="cap">（限繳日期：星期二）</div></div>
+  </div>
+
+  <div class="sect">二、繳納方式（請於限繳日期前完成）</div>
+  <ul class="pay">
+    <li>持本繳款書至代收稅款金融機構（郵局及農、漁會除外者以公告為準）臨櫃繳納。</li>
+    <li>每張繳款書金額在新臺幣3萬元以下者，可至便利商店繳納（須於限繳日期內）。</li>
+    <li>以信用卡、晶片金融卡、活期（儲蓄）存款帳戶或行動支付工具，透過繳稅網站輸入銷帳編號繳納。</li>
+  </ul>
+
+  <div class="small">
+    <ol>
+      <li>逾期繳納者，每逾3日按滯納數額加徵1%滯納金，逾30日仍未繳納者，移送強制執行。</li>
+      <li>如對核定稅額不服，應於繳納期間屆滿之翌日起30日內，檢附理由及證明文件申請復查。</li>
+      <li>如有疑問，請洽本局示範分局綜所稅股，電話（00）0000-0000。</li>
+      <li>本繳款書為範本，所載姓名、地址、證號及編號均屬虛構。</li>
+    </ol>
+  </div>
+
+  <div class="sign">財政部範例國稅局　局長　示範　明
+    <div class="seal"><span>範例國稅局印</span></div>
+  </div>
+
+  <div class="cut"><span>✂ 請沿虛線撕下　第一聯 收據／第二聯 報核聯／第三聯 存根聯</span></div>
+
+  <div class="slips">
+    <div class="slip">
+      <div class="t">第一聯　收據（納稅義務人收執）</div>
+      <div class="row"><span>銷帳編號</span><span>0000-1150-0012-3456</span></div>
+      <div class="row"><span>限繳日期</span><span>115年12月01日</span></div>
+      <div class="row"><span>應納稅額</span><span class="amt">18,300 元</span></div>
+      <div class="stamp">代收機構<br>收訖章</div>
+    </div>
+    <div class="slip">
+      <div class="t">第二聯　報核聯（代收機構）</div>
+      <div class="row"><span>納稅義務人</span><span>阮氏模</span></div>
+      <div class="row"><span>限繳日期</span><span>115年12月01日</span></div>
+      <div class="row"><span>應納稅額</span><span class="amt">18,300 元</span></div>
+      <div class="bar"></div><div class="bc">1512016X1</div>
+      <div class="bar"></div><div class="bc">0000115000123456</div>
+      <div class="bar"></div><div class="bc">000000000018300</div>
+    </div>
+    <div class="slip">
+      <div class="t">第三聯　存根聯（稽徵機關）</div>
+      <div class="row"><span>統一證號</span><span>A900000000</span></div>
+      <div class="row"><span>限繳日期</span><span>115年12月01日</span></div>
+      <div class="row"><span>應納稅額</span><span class="amt">18,300 元</span></div>
+      <div style="color:#c8102e;font-weight:700;border:1.5px solid #c8102e;display:inline-block;padding:0 3px;margin-top:2mm">範本</div>
+      <div class="stamp">經收<br>日期戳</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

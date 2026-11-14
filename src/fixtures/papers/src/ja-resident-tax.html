@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>令和8年度 市民税・県民税 納税通知書（見本）</title>
+<style>
+  @page { size: A4; margin: 0; }
+  html, body { margin: 0; padding: 0; background: #fff; }
+  body { font-family: "Noto Sans CJK JP", sans-serif; color: #1a1a1a; font-size: 11px; line-height: 1.45; }
+  .page { width: 210mm; height: 297mm; box-sizing: border-box; padding: 8mm 12mm 6mm; position: relative; overflow: hidden; }
+  .serif { font-family: "Noto Serif CJK JP", serif; }
+  .mihon { position: absolute; top: 5mm; left: 118mm; border: 3px solid #c8102e; color: #c8102e; font-weight: 700; font-size: 26px; padding: 0 10px; letter-spacing: 6px; transform: rotate(-8deg); opacity: .85; }
+  .top { display: flex; justify-content: space-between; gap: 8mm; }
+  .addr { width: 92mm; border: 1px solid #999; padding: 3mm 4mm; min-height: 30mm; }
+  .addr .zip { font-size: 13px; letter-spacing: 1px; }
+  .addr .name { font-size: 17px; font-weight: 700; margin-top: 2mm; }
+  .addr .name small { font-size: 11px; font-weight: 400; }
+  .issuer { flex: 1; text-align: right; padding-top: 9mm; font-size: 10.5px; }
+  .issuer .mayor { font-size: 14px; position: relative; display: inline-block; padding-right: 17mm; margin-top: 4mm; }
+  .seal { position: absolute; right: 0; top: -3mm; width: 14mm; height: 14mm; border: 2px solid #d0242b; color: #d0242b; font-family: "Noto Serif CJK JP", serif; display: flex; align-items: center; justify-content: center; box-sizing: border-box; opacity: .9; transform: rotate(3deg); }
+  .seal span { writing-mode: vertical-rl; font-size: 12px; line-height: 1.15; height: 3.3em; font-weight: 700; }
+  h1 { font-family: "Noto Serif CJK JP", serif; text-align: center; font-size: 19px; margin: 5mm 0 0; letter-spacing: 1px; }
+  .sub { text-align: center; font-size: 11px; margin-bottom: 1.5mm; }
+  p.lead { margin: 0 0 2.5mm; font-size: 11px; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #333; padding: 1.1mm 2mm; }
+  th { background: #eef2e8; font-weight: 500; white-space: nowrap; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ids { display: flex; gap: 3mm; margin-bottom: 2.5mm; }
+  .ids table th { width: 22mm; }
+  .grid2 { display: flex; gap: 3mm; margin-bottom: 2.5mm; }
+  .sect { font-weight: 700; font-size: 11.5px; margin: 2mm 0 1mm; border-left: 4px solid #4b6b2f; padding-left: 2mm; }
+  .duebox { display: flex; border: 2.5px solid #1a1a1a; margin: 2.5mm 0; }
+  .duebox > div { flex: 1; padding: 1.2mm 4mm; }
+  .duebox > div + div { border-left: 1.5px solid #1a1a1a; }
+  .duebox .lbl { font-size: 11px; }
+  .duebox .val { font-size: 20px; font-weight: 700; letter-spacing: 1px; }
+  .pay { display: flex; gap: 3mm; }
+  .pay ul { margin: 0; padding-left: 4.5mm; font-size: 10px; }
+  .pay > div { flex: 1; border: 1px solid #888; padding: 1.5mm 2.5mm; }
+  .small { font-size: 8.4px; line-height: 1.45; color: #333; margin-top: 2mm; }
+  .small ol { margin: 0; padding-left: 4mm; }
+  .cut { border-top: 1.5px dashed #555; margin: 4mm -12mm 0; position: relative; }
+  .cut span { position: absolute; top: -7px; left: 50%; transform: translateX(-50%); background: #fff; padding: 0 3mm; font-size: 9px; color: #555; }
+  .slips { display: flex; gap: 0; margin-top: 3mm; }
+  .slip { flex: 1; min-height: 46mm; border: 1.2px solid #2f5d8a; padding: 1.5mm 2mm; font-size: 9.5px; position: relative; }
+  .slip + .slip { border-left: 1.2px dashed #2f5d8a; }
+  .slip .t { text-align: center; font-weight: 700; color: #2f5d8a; font-size: 11px; border-bottom: 1px solid #2f5d8a; margin-bottom: 1mm; }
+  .slip .row { display: flex; justify-content: space-between; border-bottom: 1px dotted #9ab; padding: .4mm 0; }
+  .slip .amt { font-size: 15px; font-weight: 700; }
+  .bar { height: 7mm; margin-top: 1.5mm; background: repeating-linear-gradient(90deg, #000 0 1px, #fff 1px 3px, #000 3px 5px, #fff 5px 6px, #000 6px 7px, #fff 7px 10px); }
+  .stampbox { position: absolute; right: 3mm; bottom: 3mm; width: 13mm; height: 13mm; border: 1px dashed #2f5d8a; border-radius: 50%; font-size: 7px; color: #2f5d8a; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .slip .mh { position: absolute; left: 3mm; bottom: 4mm; color: #c8102e; border: 1.5px solid #c8102e; font-size: 10px; padding: 0 3px; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="mihon">見本</div>
+
+  <div class="top">
+    <div class="addr">
+      <div class="zip">〒000-0000</div>
+      <div>架空県みどり野市さくら町一丁目2番3号</div>
+      <div>サンプルハイツ101号室</div>
+      <div class="name">グエン　ティ　マウ　<small>様</small></div>
+      <div style="font-size:10px;color:#444">NGUYEN THI MAU</div>
+    </div>
+    <div class="issuer">
+      <div>通知書番号　R08-0123-456789</div>
+      <div>発行日　令和8年11月2日</div>
+      <div class="mayor serif">みどり野市長　緑野　一郎
+        <span class="seal"><span>みどり野市長之印</span></span>
+      </div>
+      <div style="margin-top:5mm">【お問合せ先】みどり野市役所 財務部 市民税課<br>電話 000-000-0000（平日 8:30〜17:15）</div>
+    </div>
+  </div>
+
+  <h1>令和8年度　市民税・県民税・森林環境税<br>納税通知書（普通徴収）</h1>
+  <div class="sub">（兼 税額決定通知書）</div>
+  <p class="lead">地方税法の規定に基づき、あなたの令和8年度の市民税・県民税及び森林環境税（個人住民税）の税額を下記のとおり決定しましたので通知します。下記の納期限までに納めてください。</p>
+
+  <div class="ids">
+    <table>
+      <tr><th>宛名番号</th><td>0000-1234-5678</td><th>課税年度</th><td>令和8年度</td></tr>
+      <tr><th>徴収方法</th><td>普通徴収</td><th>納期区分</th><td>随時（全期一括）</td></tr>
+    </table>
+  </div>
+
+  <div class="grid2">
+    <table style="width:44%">
+      <tr><th colspan="2">課税標準の内訳（令和7年中の所得）</th></tr>
+      <tr><td>総所得金額等</td><td class="num">1,725,000 円</td></tr>
+      <tr><td>所得控除額合計</td><td class="num">1,430,000 円</td></tr>
+      <tr><td>課税標準額</td><td class="num">295,000 円</td></tr>
+      <tr><td>税額控除額</td><td class="num">0 円</td></tr>
+    </table>
+    <table>
+      <tr><th>区分</th><th>市民税</th><th>県民税</th><th>森林環境税</th><th>合計</th></tr>
+      <tr><td>所得割額</td><td class="num">17,700</td><td class="num">11,800</td><td class="num">―</td><td class="num">29,500</td></tr>
+      <tr><td>均等割額</td><td class="num">3,000</td><td class="num">1,000</td><td class="num">1,000</td><td class="num">5,000</td></tr>
+      <tr><td><b>年税額</b></td><td class="num"><b>20,700</b></td><td class="num"><b>12,800</b></td><td class="num"><b>1,000</b></td><td class="num"><b>34,500</b></td></tr>
+      <tr><td colspan="5" style="font-size:9.5px">税率：所得割 市民税6％・県民税4％　（単位：円）</td></tr>
+    </table>
+  </div>
+
+  <div class="sect">納付額及び納期限</div>
+  <table>
+    <tr><th>期別</th><th>納期限</th><th>納付額</th><th>備考</th></tr>
+    <tr><td style="text-align:center">随時1期（全期）</td><td style="text-align:center">令和8年11月18日（水）</td><td class="num">34,500 円</td><td style="font-size:9.5px">年度途中の課税のため一括でお納めください</td></tr>
+  </table>
+
+  <div class="duebox">
+    <div><div class="lbl">今回お納めいただく金額</div><div class="val">34,500 円</div></div>
+    <div><div class="lbl">納期限</div><div class="val">令和8年11月18日（水）</div></div>
+  </div>
+
+  <div class="sect">納付方法</div>
+  <div class="pay">
+    <div><b>窓口で納める</b>
+      <ul><li>指定金融機関・ゆうちょ銀行・郵便局</li><li>みどり野市役所 収納課（1階 7番窓口）</li></ul></div>
+    <div><b>コンビニ・スマホで納める</b>
+      <ul><li>バーコード付き納付書で全国のコンビニ</li><li>地方税統一QRコード（eL-QR）でスマホ決済</li><li>※納期限を過ぎると利用できません</li></ul></div>
+    <div><b>口座振替</b>
+      <ul><li>次年度からの口座振替は、通帳・届出印をお持ちのうえ金融機関でお申込みください</li></ul></div>
+  </div>
+
+  <div class="small">
+    <ol>
+      <li>納期限までに納付されない場合は、納期限の翌日から納付の日までの期間に応じ、地方税法に定める割合で計算した延滞金を加算して納めていただくことになります。また、督促状を発送します。</li>
+      <li>この処分に不服がある場合は、この通知を受け取った日の翌日から起算して3か月以内に、みどり野市長に対して審査請求をすることができます。</li>
+      <li>災害・失業等により納付が困難な場合は、納期限前に市民税課へご相談ください（減免・徴収猶予の制度があります）。</li>
+      <li>この通知書は見本です。記載の氏名・住所・番号はすべて架空のものです。</li>
+    </ol>
+  </div>
+
+  <div class="cut"><span>✂ きりとり線 ― 下の納付書を切り離さずに金融機関へお持ちください</span></div>
+
+  <div class="slips">
+    <div class="slip">
+      <div class="t">納付書（市・県民税）</div>
+      <div class="row"><span>年度・期別</span><span>令和8年度 随時1期</span></div>
+      <div class="row"><span>通知書番号</span><span>R08-0123-456789</span></div>
+      <div class="row"><span>納期限</span><span>令和8年11月18日</span></div>
+      <div class="row"><span>合計額</span><span class="amt">¥34,500</span></div>
+      <div class="bar"></div>
+      <div style="font-size:7.5px;letter-spacing:.5px">91900000-0000-1234-0345000-26111800</div>
+    </div>
+    <div class="slip">
+      <div class="t">領収済通知書</div>
+      <div class="row"><span>口座番号</span><span>00000-0-000000</span></div>
+      <div class="row"><span>加入者</span><span>みどり野市会計管理者</span></div>
+      <div class="row"><span>納期限</span><span>令和8年11月18日</span></div>
+      <div class="row"><span>合計額</span><span class="amt">¥34,500</span></div>
+      <div style="font-size:8px;margin-top:1mm">納付者：グエン ティ マウ 様</div>
+      <div class="stampbox">領収<br>日附印</div>
+    </div>
+    <div class="slip">
+      <div class="t">領収証書</div>
+      <div class="row"><span>年度・期別</span><span>令和8年度 随時1期</span></div>
+      <div class="row"><span>納期限</span><span>令和8年11月18日</span></div>
+      <div class="row"><span>合計額</span><span class="amt">¥34,500</span></div>
+      <div style="font-size:8px;margin-top:1mm">上記のとおり領収しました。<br>（領収日附印のないものは無効）</div>
+      <span class="mh">見本</span>
+      <div class="stampbox">領収<br>日附印</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+{
+  "now": "2026-11-14T03:00:00Z",
+  "papers": [
+    {
+      "id": "ja-resident-tax",
+      "file": "ja-resident-tax.jpg",
+      "timeZone": "Asia/Tokyo",
+      "expected": {
+        "isPaperwork": true,
+        "language": "ja",
+        "country": "JP",
+        "urgency": "act_now",
+        "deadline": "2026-11-18",
+        "amount": "34500",
+        "readable": true
+      }
+    },
+    {
+      "id": "ko-health-insurance",
+      "file": "ko-health-insurance.jpg",
+      "timeZone": "Asia/Seoul",
+      "expected": {
+        "isPaperwork": true,
+        "language": "ko",
+        "country": "KR",
+        "urgency": "has_deadline",
+        "deadline": "2026-12-10",
+        "amount": "126880",
+        "readable": true
+      }
+    },
+    {
+      "id": "zh-tw-income-tax",
+      "file": "zh-tw-income-tax.jpg",
+      "timeZone": "Asia/Taipei",
+      "expected": {
+        "isPaperwork": true,
+        "language": "zh-TW",
+        "country": "TW",
+        "urgency": "has_deadline",
+        "deadline": "2026-12-01",
+        "amount": "18300",
+        "readable": true
+      }
+    },
+    {
+      "id": "not-paperwork",
+      "file": "not-paperwork.jpg",
+      "timeZone": "Asia/Tokyo",
+      "expected": {
+        "isPaperwork": false,
+        "language": "und",
+        "country": null,
+        "urgency": "info_only",
+        "deadline": null,
+        "amount": null,
+        "readable": true
+      }
+    }
+  ]
+}

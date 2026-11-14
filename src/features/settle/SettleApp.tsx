@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type ChangeEvent } from "react";
-import { ApiClientError, processPaperwork, speak as requestSpeech } from "@/lib/api-client";
+import { ApiClientError, processPaperwork, sendFeedback, speak as requestSpeech } from "@/lib/api-client";
 import type { Draft, PaperworkAnalysis, StoredTask } from "@/lib/contracts";
 import { downscaleImage } from "@/lib/image/downscale";
 import { hapticTap, onBackButton, shareText } from "@/lib/native";
@@ -16,13 +16,24 @@ import { createTask, loadTasks, saveTasks, sortTasks } from "@/lib/store/tasks";
 import { getSupportContacts } from "@/lib/support/contacts";
 import { ProcessingErrorScreen } from "@/features/processing/ProcessingErrorScreen";
 import { ProcessingScreen } from "@/features/processing/ProcessingScreen";
+import { DraftDisplayScreen } from "@/features/result/DraftDisplayScreen";
 import { ResultScreen, type ReminderStatus } from "@/features/result/ResultScreen";
 import { TaskListScreen } from "@/features/tasks/TaskListScreen";
+
+type ResultState = {
+  name: "result";
+  analysis: PaperworkAnalysis;
+  taskId: string | null;
+  reminderStatus: ReminderStatus;
+};
+
+type DraftState = Omit<ResultState, "name"> & { name: "draft"; draft: Draft };
 
 type Screen =
   | { name: "tasks" }
   | { name: "processing"; image: string | null }
-  | { name: "result"; analysis: PaperworkAnalysis; taskId: string | null; reminderStatus: ReminderStatus }
+  | ResultState
+  | DraftState
   | { name: "error"; message: string; image: string | null };
 
 const GENERIC_ERROR = "Có lỗi xảy ra. Hãy thử lại.";
@@ -33,6 +44,9 @@ export function SettleApp() {
   const [speaking, setSpeaking] = useState(false);
   const [speechNotice, setSpeechNotice] = useState("");
   const [demoReminderNotice, setDemoReminderNotice] = useState("");
+  const [copyNotice, setCopyNotice] = useState("");
+  const [feedbackNotice, setFeedbackNotice] = useState("");
+  const [feedbackVerdict, setFeedbackVerdict] = useState<"up" | "down" | null>(null);
   const cameraInput = useRef<HTMLInputElement>(null);
   const libraryInput = useRef<HTMLInputElement>(null);
   const screenRef = useRef(screen);
@@ -58,6 +72,15 @@ export function SettleApp() {
       if (current.name === "processing") {
         processingRun.current += 1;
         setScreen({ name: "tasks" });
+        return true;
+      }
+      if (current.name === "draft") {
+        setScreen({
+          name: "result",
+          analysis: current.analysis,
+          taskId: current.taskId,
+          reminderStatus: current.reminderStatus,
+        });
         return true;
       }
       setScreen({ name: "tasks" });
@@ -151,6 +174,9 @@ export function SettleApp() {
   function openTask(task: StoredTask) {
     setSpeechNotice("");
     setDemoReminderNotice("");
+    setCopyNotice("");
+    setFeedbackNotice("");
+    setFeedbackVerdict(null);
     setScreen({
       name: "result",
       analysis: task.analysis,
@@ -223,12 +249,51 @@ export function SettleApp() {
     await shareText({ title: "Settle", text: draft.original });
   }
 
+  function openDraft(draft: Draft) {
+    if (screen.name !== "result") return;
+    setCopyNotice("");
+    setScreen({ ...screen, name: "draft", draft });
+  }
+
+  function closeDraft() {
+    if (screen.name !== "draft") return;
+    setScreen({
+      name: "result",
+      analysis: screen.analysis,
+      taskId: screen.taskId,
+      reminderStatus: screen.reminderStatus,
+    });
+  }
+
+  async function copyDraft(text: string) {
+    setCopyNotice("");
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error("Clipboard is unavailable");
+      await navigator.clipboard.writeText(text);
+      setCopyNotice("Đã sao chép bản gốc.");
+    } catch {
+      setCopyNotice("Chưa sao chép được. Hãy dùng nút chia sẻ.");
+    }
+  }
+
+  async function submitFeedback(verdict: "up" | "down") {
+    setFeedbackNotice("");
+    try {
+      await sendFeedback(verdict);
+      setFeedbackVerdict(verdict);
+      setFeedbackNotice("Đã ghi nhận phản hồi.");
+    } catch (error) {
+      setFeedbackNotice(error instanceof ApiClientError ? error.message : GENERIC_ERROR);
+    }
+  }
+
   async function scheduleDemo(task: StoredTask) {
     const scheduled = await scheduleDemoReminder(task, 30);
     setDemoReminderNotice(scheduled ? "Đã đặt nhắc thử sau 30 giây." : "Mở bằng app để nhận nhắc hạn.");
   }
 
-  const visibleTask = screen.name === "result" ? tasks?.find((task) => task.id === screen.taskId) ?? null : null;
+  const resultLikeScreen = screen.name === "result" || screen.name === "draft";
+  const visibleTask = resultLikeScreen ? tasks?.find((task) => task.id === screen.taskId) ?? null : null;
   const supportContacts = screen.name === "result" ? getSupportContacts(screen.analysis.country) : [];
 
   return (
@@ -262,6 +327,18 @@ export function SettleApp() {
           onBack={() => setScreen({ name: "tasks" })}
         />
       )}
+      {screen.name === "draft" && (
+        <DraftDisplayScreen
+          draft={screen.draft}
+          language={screen.analysis.language}
+          speaking={speaking}
+          copyNotice={copyNotice}
+          onBack={closeDraft}
+          onSpeak={(text, language) => void handleSpeak(text, language)}
+          onCopy={(text) => void copyDraft(text)}
+          onShare={(draft) => void shareDraft(draft)}
+        />
+      )}
       {screen.name === "result" && (
         <ResultScreen
           analysis={screen.analysis}
@@ -278,6 +355,12 @@ export function SettleApp() {
           onShareDraft={(draft) => void shareDraft(draft)}
           onSpeak={(text, language) => void handleSpeak(text, language)}
           onScheduleDemoReminder={() => visibleTask && void scheduleDemo(visibleTask)}
+          onOpenDraft={openDraft}
+          onCopyDraft={(text) => void copyDraft(text)}
+          copyNotice={copyNotice}
+          feedbackVerdict={feedbackVerdict}
+          feedbackNotice={feedbackNotice}
+          onFeedback={(verdict) => void submitFeedback(verdict)}
         />
       )}
     </main>

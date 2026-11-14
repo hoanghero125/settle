@@ -6,6 +6,7 @@ export type IconName =
   | "camera"
   | "calendar"
   | "check"
+  | "copy"
   | "document"
   | "refresh"
   | "share"
@@ -44,6 +45,12 @@ export function Icon({ name, title, ...props }: IconProps) {
         </>
       )}
       {name === "check" && <path {...common} d="m5 12.5 4.2 4.1L19 7" />}
+      {name === "copy" && (
+        <>
+          <rect {...common} x="8" y="8" width="11.5" height="12" rx="2" />
+          <path {...common} d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2" />
+        </>
+      )}
       {name === "document" && (
         <>
           <path {...common} d="M6 3.5h8l4 4v13H6a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z" />

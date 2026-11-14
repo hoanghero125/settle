@@ -23,6 +23,12 @@ type ResultScreenProps = {
   onShareDraft: (draft: Draft) => void;
   onSpeak: (text: string, language: string) => void;
   onScheduleDemoReminder: () => void;
+  onOpenDraft: (draft: Draft) => void;
+  onCopyDraft: (text: string) => void;
+  copyNotice: string;
+  feedbackVerdict: "up" | "down" | null;
+  feedbackNotice: string;
+  onFeedback: (verdict: "up" | "down") => void;
 };
 
 export function ResultScreen({
@@ -40,6 +46,12 @@ export function ResultScreen({
   onShareDraft,
   onSpeak,
   onScheduleDemoReminder,
+  onOpenDraft,
+  onCopyDraft,
+  copyNotice,
+  feedbackVerdict,
+  feedbackNotice,
+  onFeedback,
 }: ResultScreenProps) {
   if (!analysis.isPaperwork) {
     return <NotPaperworkScreen message={analysis.notPaperworkReason ?? "Ảnh này không phải giấy tờ."} onBack={onBack} />;
@@ -212,22 +224,53 @@ export function ResultScreen({
                 <p className="mt-3 text-3xl font-semibold leading-snug">{draft.original}</p>
                 <p className="mt-4 border-t border-line pt-4 text-lg leading-relaxed text-ink-soft">{draft.vietnamese}</p>
                 <div className="mt-4 flex flex-col gap-2">
-                  <Button onClick={() => onShareDraft(draft)}>
-                    <Icon name="share" className="size-5" />
-                    {draftActionLabel(draft.kind)}
-                  </Button>
+                  {canShowToClerk(draft) && (
+                    <Button onClick={() => onOpenDraft(draft)}>
+                      <Icon name="document" className="size-5" />
+                      Giơ cho người nhận
+                    </Button>
+                  )}
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button variant={canShowToClerk(draft) ? "quiet" : "primary"} onClick={() => onShareDraft(draft)}>
+                      <Icon name="share" className="size-5" />
+                      {draftActionLabel(draft.kind)}
+                    </Button>
+                    <Button variant="quiet" onClick={() => onCopyDraft(draft.original)}>
+                      <Icon name="copy" className="size-5" />
+                      Sao chép
+                    </Button>
+                  </div>
                   <Button variant="quiet" onClick={() => onSpeak(draft.original, analysis.language)} disabled={speaking}>
                     <Icon name="speaker" className="size-5" />
                     {speaking ? "Đang phát" : "Nghe câu này"}
                   </Button>
+                  {copyNotice && <p className="text-center text-base text-ink-soft" role="status">{copyNotice}</p>}
                 </div>
               </article>
             ))}
           </div>
         </section>
       )}
+
+      <section className="mt-8 rounded-sheet border border-line bg-sheet p-5" aria-labelledby="feedback-heading">
+        <h2 id="feedback-heading" className="text-lg font-semibold">Kết quả này có hữu ích không?</h2>
+        <p className="mt-1 text-base leading-relaxed text-ink-soft">Phản hồi chỉ giúp Settle đo độ hữu ích, không gửi ảnh hay nội dung giấy tờ.</p>
+        <div className="mt-3 grid grid-cols-2 gap-2">
+          <Button variant={feedbackVerdict === "up" ? "primary" : "quiet"} onClick={() => onFeedback("up")}>
+            Hữu ích
+          </Button>
+          <Button variant={feedbackVerdict === "down" ? "primary" : "quiet"} onClick={() => onFeedback("down")}>
+            Chưa đúng
+          </Button>
+        </div>
+        {feedbackNotice && <p className="mt-3 text-center text-base text-ink-soft" role="status">{feedbackNotice}</p>}
+      </section>
     </div>
   );
+}
+
+function canShowToClerk(draft: Draft): boolean {
+  return draft.kind === "counter_phrase" || draft.kind === "phone_script";
 }
 
 function ActionCard({

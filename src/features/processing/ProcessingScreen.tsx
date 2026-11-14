@@ -17,7 +17,7 @@ export function ProcessingScreen({ image, onCancel }: { image: string | null; on
       <header className="flex items-start justify-between gap-4">
         <div>
           <p className="text-base font-medium text-ink-soft">Settle đang làm việc</p>
-          <h1 className="mt-1 text-3xl font-bold tracking-tight">Đọc giấy tờ</h1>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight">Đọc giấy tờ</h1>
         </div>
         <SettleLogo size="sm" />
       </header>
@@ -38,18 +38,18 @@ export function ProcessingScreen({ image, onCancel }: { image: string | null; on
         <div className="mt-6 flex items-start gap-3">
           <span className="mt-2 size-2 shrink-0 rounded-full bg-carbon" />
           <div>
-            <h2 className="text-xl font-semibold">{takingLong ? "Đang xử lý lâu hơn dự kiến" : "Đang tìm hạn chót và việc cần làm"}</h2>
+            <h2 className="text-lg font-semibold">{takingLong ? "Vẫn đang xử lý" : "Đang tìm hạn chót"}</h2>
             <p className="mt-1 text-lg leading-relaxed text-ink-soft">
               {takingLong
-                ? "Giữ màn hình này mở hoặc hủy để quay lại danh sách việc giấy tờ."
-                : "Settle đang xếp hồ sơ và soạn sẵn phần cần trả lời bằng ngôn ngữ của giấy tờ."}
+                ? "Bạn có thể hủy bất cứ lúc nào."
+                : "Thường mất vài giây."}
             </p>
           </div>
         </div>
       </section>
 
       <Button variant="quiet" className="w-full" onClick={onCancel}>
-        Hủy xử lý
+        Hủy
       </Button>
     </div>
   );

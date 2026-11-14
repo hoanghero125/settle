@@ -18,6 +18,7 @@ import { ProcessingErrorScreen } from "@/features/processing/ProcessingErrorScre
 import { ProcessingScreen } from "@/features/processing/ProcessingScreen";
 import { DraftDisplayScreen } from "@/features/result/DraftDisplayScreen";
 import { ResultScreen, type ReminderStatus } from "@/features/result/ResultScreen";
+import { TaskBrowseScreen } from "@/features/tasks/TaskBrowseScreen";
 import { TaskListScreen } from "@/features/tasks/TaskListScreen";
 
 type ResultState = {
@@ -25,12 +26,14 @@ type ResultState = {
   analysis: PaperworkAnalysis;
   taskId: string | null;
   reminderStatus: ReminderStatus;
+  returnTo: "tasks" | "all-tasks";
 };
 
 type DraftState = Omit<ResultState, "name"> & { name: "draft"; draft: Draft };
 
 type Screen =
   | { name: "tasks" }
+  | { name: "all-tasks" }
   | { name: "processing"; image: string | null }
   | ResultState
   | DraftState
@@ -69,6 +72,10 @@ export function SettleApp() {
     return onBackButton(() => {
       const current = screenRef.current;
       if (current.name === "tasks") return false;
+      if (current.name === "all-tasks") {
+        setScreen({ name: "tasks" });
+        return true;
+      }
       if (current.name === "processing") {
         processingRun.current += 1;
         setScreen({ name: "tasks" });
@@ -80,10 +87,15 @@ export function SettleApp() {
           analysis: current.analysis,
           taskId: current.taskId,
           reminderStatus: current.reminderStatus,
+          returnTo: current.returnTo,
         });
         return true;
       }
-      setScreen({ name: "tasks" });
+      if (current.name === "error") {
+        setScreen({ name: "tasks" });
+        return true;
+      }
+      setScreen(current.returnTo === "all-tasks" ? { name: "all-tasks" } : { name: "tasks" });
       return true;
     });
   }, []);
@@ -115,7 +127,7 @@ export function SettleApp() {
         if (run !== processingRun.current) return;
         if (!analysis.isPaperwork) {
           void hapticTap();
-          setScreen({ name: "result", analysis, taskId: null, reminderStatus: "not-needed" });
+          setScreen({ name: "result", analysis, taskId: null, reminderStatus: "not-needed", returnTo: "tasks" });
           return;
         }
 
@@ -131,7 +143,7 @@ export function SettleApp() {
 
         if (run !== processingRun.current) return;
         void hapticTap();
-        setScreen({ name: "result", analysis, taskId: task.id, reminderStatus });
+        setScreen({ name: "result", analysis, taskId: task.id, reminderStatus, returnTo: "tasks" });
       } catch (error) {
         if (run !== processingRun.current) return;
         const message = error instanceof ApiClientError ? error.message : GENERIC_ERROR;
@@ -171,7 +183,7 @@ export function SettleApp() {
     setScreen({ name: "tasks" });
   }
 
-  function openTask(task: StoredTask) {
+  function openTask(task: StoredTask, returnTo: ResultState["returnTo"] = "tasks") {
     setSpeechNotice("");
     setDemoReminderNotice("");
     setCopyNotice("");
@@ -182,6 +194,7 @@ export function SettleApp() {
       analysis: task.analysis,
       taskId: task.id,
       reminderStatus: reminderStatusFor(task.analysis, task.reminderId),
+      returnTo,
     });
   }
 
@@ -262,6 +275,7 @@ export function SettleApp() {
       analysis: screen.analysis,
       taskId: screen.taskId,
       reminderStatus: screen.reminderStatus,
+      returnTo: screen.returnTo,
     });
   }
 
@@ -297,7 +311,7 @@ export function SettleApp() {
   const supportContacts = screen.name === "result" ? getSupportContacts(screen.analysis.country) : [];
 
   return (
-    <main className="mx-auto flex min-h-[100svh] w-full max-w-md flex-1 flex-col overflow-hidden px-5 pb-[calc(env(safe-area-inset-bottom)+1.25rem)] pt-[calc(env(safe-area-inset-top)+1.5rem)]">
+    <main className="mx-auto flex h-[100svh] min-h-0 w-full max-w-md shrink-0 flex-col overflow-hidden px-5 pb-[calc(env(safe-area-inset-bottom)+1.25rem)] pt-[calc(env(safe-area-inset-top)+1.5rem)]">
       <input
         ref={cameraInput}
         type="file"
@@ -314,6 +328,15 @@ export function SettleApp() {
           onCapture={openCamera}
           onChooseFromLibrary={chooseFromLibrary}
           onOpenTask={openTask}
+          onToggleDone={toggleTaskDone}
+          onViewAll={() => setScreen({ name: "all-tasks" })}
+        />
+      )}
+      {screen.name === "all-tasks" && (
+        <TaskBrowseScreen
+          tasks={tasks ?? []}
+          onBack={() => setScreen({ name: "tasks" })}
+          onOpenTask={(task) => openTask(task, "all-tasks")}
           onToggleDone={toggleTaskDone}
         />
       )}
@@ -349,7 +372,7 @@ export function SettleApp() {
           demoReminderNotice={demoReminderNotice}
           showDemoReminder={isDemoMode()}
           supportContacts={supportContacts}
-          onBack={() => setScreen({ name: "tasks" })}
+          onBack={() => setScreen(screen.returnTo === "all-tasks" ? { name: "all-tasks" } : { name: "tasks" })}
           onUndoFiling={() => void undoFiling()}
           onUndoReminder={() => void handleUndoReminder()}
           onShareDraft={(draft) => void shareDraft(draft)}

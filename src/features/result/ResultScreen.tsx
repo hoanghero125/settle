@@ -72,17 +72,17 @@ export function ResultScreen({
           >
             <Icon name="arrow-left" className="size-6" />
           </button>
-          <p className="text-base font-medium text-ink-soft">Kết quả đã sẵn sàng</p>
+          <p className="text-base font-medium text-ink-soft">Kết quả</p>
         </div>
         <SettleLogo size="sm" />
       </header>
 
       <section className="mt-5">
         <Stamp urgency={analysis.urgency} />
-        <h1 className="mt-4 text-3xl font-bold tracking-tight">{analysis.docType}</h1>
+        <h1 className="mt-4 text-2xl font-bold tracking-tight">{analysis.docType}</h1>
         <p className="mt-2 text-lg leading-relaxed text-ink-soft">{analysis.sender}</p>
         <div className="mt-5 border-l-4 border-carbon pl-4">
-          <p className="text-lg leading-relaxed">{analysis.summary}</p>
+          <p className="text-base leading-relaxed">{analysis.summary}</p>
           <button
             type="button"
             onClick={() => onSpeak(analysis.summary, "vi")}
@@ -97,16 +97,16 @@ export function ResultScreen({
       </section>
 
       <section className="mt-8" aria-labelledby="settle-done-heading">
-        <h2 id="settle-done-heading" className="text-xl font-semibold">Settle đã làm</h2>
+        <h2 id="settle-done-heading" className="text-xl font-semibold">Đã xử lý</h2>
         <div className="mt-3 space-y-3">
           <ActionCard
             icon="document"
-            title={task ? "Đã xếp vào Việc giấy tờ" : "Đã bỏ khỏi Việc giấy tờ"}
-            detail={task ? "Việc này sẽ còn ở đây sau khi bạn đóng app." : "Giấy tờ này không còn trong danh sách trên máy."}
+            title={task ? "Đã lưu" : "Đã bỏ khỏi danh sách"}
+            detail={task ? "Trên thiết bị này." : "Không còn lưu trên thiết bị."}
             action={
               task ? (
-                <Button variant="quiet" className="mt-3 w-full" onClick={onUndoFiling}>
-                  Hoàn tác xếp hồ sơ
+                <Button variant="quiet" className="mt-2 w-full" onClick={onUndoFiling}>
+                  Hoàn tác
                 </Button>
               ) : undefined
             }
@@ -121,7 +121,7 @@ export function ResultScreen({
                 <div className="mt-3 grid gap-2">
                   {reminderStatus === "scheduled" && task.reminderId !== null && (
                     <Button variant="quiet" className="w-full" onClick={onUndoReminder}>
-                      Hoàn tác nhắc hạn
+                      Hoàn tác
                     </Button>
                   )}
                   {showDemoReminder && (
@@ -134,11 +134,6 @@ export function ResultScreen({
               ) : undefined
             }
           />
-          <ActionCard
-            icon="check"
-            title={analysis.drafts.length > 0 ? `Đã soạn sẵn ${analysis.drafts.length} phần trả lời` : "Chưa cần soạn phần trả lời"}
-            detail={analysis.drafts.length > 0 ? "Bạn chọn khi nào và cách gửi. Settle không tự gửi thay bạn." : "Giấy tờ này chỉ để bạn biết thông tin."}
-          />
         </div>
       </section>
 
@@ -146,7 +141,7 @@ export function ResultScreen({
         <section className="mt-6 rounded-sheet border border-amber bg-amber-wash p-5" aria-label="Hạn chót cần kiểm tra">
           <p className="text-lg font-semibold text-amber">Hạn chót cần kiểm tra</p>
           <p className="mt-1 text-lg leading-relaxed text-amber">
-            Settle đọc được {formatFullDate(analysis.deadline.date)}, nhưng chữ trên giấy chưa đủ rõ nên chưa đặt nhắc.
+            Đọc được {formatFullDate(analysis.deadline.date)}, nhưng chưa đủ chắc để đặt nhắc.
           </p>
           <p className="mt-3 text-base leading-relaxed text-amber">“{analysis.deadline.sourceText}”</p>
         </section>
@@ -154,7 +149,7 @@ export function ResultScreen({
 
       {(analysis.keyFacts.length > 0 || analysis.deadline) && (
         <section className="mt-8" aria-labelledby="details-heading">
-          <h2 id="details-heading" className="text-xl font-semibold">Chi tiết trên giấy</h2>
+          <h2 id="details-heading" className="text-xl font-semibold">Trên giấy</h2>
           <dl className="mt-3 divide-y divide-line rounded-sheet border border-line bg-sheet px-5">
             {analysis.keyFacts.map((fact) => (
               <div key={`${fact.label}-${fact.sourceText}`} className="py-4">
@@ -182,7 +177,7 @@ export function ResultScreen({
 
       {analysis.uncertain.length > 0 && (
         <section className="mt-6 rounded-sheet border border-amber bg-amber-wash p-5" aria-labelledby="check-heading">
-          <h2 id="check-heading" className="text-lg font-semibold text-amber">Hãy kiểm tra lại</h2>
+          <h2 id="check-heading" className="text-lg font-semibold text-amber">Cần kiểm tra</h2>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-lg leading-relaxed text-amber">
             {analysis.uncertain.map((item) => (
               <li key={item}>{item}</li>
@@ -193,12 +188,15 @@ export function ResultScreen({
 
       {supportContacts.length > 0 && (
         <section className="mt-8" aria-labelledby="support-heading">
-          <h2 id="support-heading" className="text-xl font-semibold">Nơi có thể hỗ trợ</h2>
-          <p className="mt-1 text-base leading-relaxed text-ink-soft">Số điện thoại đã được Settle kiểm tra từ nguồn chính thức.</p>
-          <div className="mt-3 space-y-3">
+          <details className="rounded-sheet border border-line bg-sheet">
+            <summary id="support-heading" className="flex min-h-14 cursor-pointer items-center justify-between gap-4 px-5 text-lg font-semibold text-carbon">
+              Hỗ trợ chính thức
+              <span className="text-base font-medium text-ink-soft">{supportContacts.length} số</span>
+            </summary>
+            <div className="space-y-3 border-t border-line p-4">
             {supportContacts.map((contact) => (
-              <article key={`${contact.organization}-${contact.phone}`} className="rounded-sheet border border-line bg-sheet p-5">
-                <h3 className="text-lg font-semibold leading-snug">{contact.organization}</h3>
+              <article key={`${contact.organization}-${contact.phone}`} className="rounded-sheet border border-line p-4">
+                <h3 className="text-base font-semibold leading-snug">{contact.organization}</h3>
                 {contact.hours && <p className="mt-2 text-base leading-relaxed text-ink-soft">{contact.hours}</p>}
                 <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
                   <a href={`tel:${contact.phone}`} className="inline-flex min-h-14 items-center text-lg font-semibold text-carbon active:text-carbon-deep">
@@ -210,51 +208,37 @@ export function ResultScreen({
                 </div>
               </article>
             ))}
-          </div>
+            </div>
+          </details>
         </section>
       )}
 
       {analysis.drafts.length > 0 && (
         <section className="mt-8" aria-labelledby="drafts-heading">
-          <h2 id="drafts-heading" className="text-xl font-semibold">Phần trả lời đã soạn</h2>
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 id="drafts-heading" className="text-xl font-semibold">Bản soạn</h2>
+            <p className="text-base text-ink-soft">{analysis.drafts.length} mẫu</p>
+          </div>
           <div className="mt-3 space-y-3">
             {analysis.drafts.map((draft) => (
-              <article key={`${draft.kind}-${draft.recipient}-${draft.original}`} className="rounded-sheet border border-line bg-sheet p-5">
-                <p className="text-base font-medium text-ink-soft">Cho {draft.recipient}</p>
-                <p className="mt-3 text-3xl font-semibold leading-snug">{draft.original}</p>
-                <p className="mt-4 border-t border-line pt-4 text-lg leading-relaxed text-ink-soft">{draft.vietnamese}</p>
-                <div className="mt-4 flex flex-col gap-2">
-                  {canShowToClerk(draft) && (
-                    <Button onClick={() => onOpenDraft(draft)}>
-                      <Icon name="document" className="size-5" />
-                      Giơ cho người nhận
-                    </Button>
-                  )}
-                  <div className="grid grid-cols-2 gap-2">
-                    <Button variant={canShowToClerk(draft) ? "quiet" : "primary"} onClick={() => onShareDraft(draft)}>
-                      <Icon name="share" className="size-5" />
-                      {draftActionLabel(draft.kind)}
-                    </Button>
-                    <Button variant="quiet" onClick={() => onCopyDraft(draft.original)}>
-                      <Icon name="copy" className="size-5" />
-                      Sao chép
-                    </Button>
-                  </div>
-                  <Button variant="quiet" onClick={() => onSpeak(draft.original, analysis.language)} disabled={speaking}>
-                    <Icon name="speaker" className="size-5" />
-                    {speaking ? "Đang phát" : "Nghe câu này"}
-                  </Button>
-                  {copyNotice && <p className="text-center text-base text-ink-soft" role="status">{copyNotice}</p>}
-                </div>
-              </article>
+              <DraftCard
+                key={`${draft.kind}-${draft.recipient}-${draft.original}`}
+                draft={draft}
+                language={analysis.language}
+                speaking={speaking}
+                onOpenDraft={onOpenDraft}
+                onShareDraft={onShareDraft}
+                onCopyDraft={onCopyDraft}
+                onSpeak={onSpeak}
+              />
             ))}
           </div>
+          {copyNotice && <p className="mt-3 text-center text-base text-ink-soft" role="status">{copyNotice}</p>}
         </section>
       )}
 
       <section className="mt-8 rounded-sheet border border-line bg-sheet p-5" aria-labelledby="feedback-heading">
-        <h2 id="feedback-heading" className="text-lg font-semibold">Kết quả này có hữu ích không?</h2>
-        <p className="mt-1 text-base leading-relaxed text-ink-soft">Phản hồi chỉ giúp Settle đo độ hữu ích, không gửi ảnh hay nội dung giấy tờ.</p>
+        <h2 id="feedback-heading" className="text-lg font-semibold">Hữu ích không?</h2>
         <div className="mt-3 grid grid-cols-2 gap-2">
           <Button variant={feedbackVerdict === "up" ? "primary" : "quiet"} onClick={() => onFeedback("up")}>
             Hữu ích
@@ -266,6 +250,78 @@ export function ResultScreen({
         {feedbackNotice && <p className="mt-3 text-center text-base text-ink-soft" role="status">{feedbackNotice}</p>}
       </section>
     </div>
+  );
+}
+
+function DraftCard({
+  draft,
+  language,
+  speaking,
+  onOpenDraft,
+  onShareDraft,
+  onCopyDraft,
+  onSpeak,
+}: {
+  draft: Draft;
+  language: string;
+  speaking: boolean;
+  onOpenDraft: (draft: Draft) => void;
+  onShareDraft: (draft: Draft) => void;
+  onCopyDraft: (text: string) => void;
+  onSpeak: (text: string, language: string) => void;
+}) {
+  const displayAtCounter = canShowToClerk(draft);
+
+  return (
+    <article className="rounded-sheet border border-line bg-sheet p-5">
+      <p className="text-base font-medium text-ink-soft">{draft.recipient}</p>
+      <p className="mt-2 line-clamp-3 text-xl font-semibold leading-snug">{draft.original}</p>
+      <p className="mt-3 line-clamp-2 text-base leading-relaxed text-ink-soft">{draft.vietnamese}</p>
+
+      <div className="mt-5">
+        {displayAtCounter ? (
+          <Button className="w-full" onClick={() => onOpenDraft(draft)}>
+            <Icon name="document" className="size-5" />
+            Giơ cho người nhận
+          </Button>
+        ) : (
+          <Button className="w-full" onClick={() => onShareDraft(draft)}>
+            <Icon name="share" className="size-5" />
+            {draftActionLabel(draft.kind)}
+          </Button>
+        )}
+
+        <div className={`mt-2 grid gap-2 ${displayAtCounter ? "grid-cols-3" : "grid-cols-2"}`}>
+          <DraftUtilityButton icon="speaker" label={speaking ? "Đang phát" : "Nghe"} onClick={() => onSpeak(draft.original, language)} disabled={speaking} />
+          {displayAtCounter && <DraftUtilityButton icon="share" label="Chia sẻ" onClick={() => onShareDraft(draft)} />}
+          <DraftUtilityButton icon="copy" label="Sao chép" onClick={() => onCopyDraft(draft.original)} />
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function DraftUtilityButton({
+  icon,
+  label,
+  onClick,
+  disabled = false,
+}: {
+  icon: "speaker" | "share" | "copy";
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className="flex min-h-14 items-center justify-center gap-2 rounded-sheet border border-line px-2 text-base font-semibold text-carbon active:bg-line/60 disabled:opacity-50"
+    >
+      <Icon name={icon} className="size-5 shrink-0" />
+      <span className="truncate">{label}</span>
+    </button>
   );
 }
 
@@ -305,21 +361,21 @@ function ActionCard({
 
 function reminderCopy(status: ReminderStatus, deadline: string | undefined) {
   if (status === "scheduled") {
-    return { title: `Đã đặt nhắc ${deadline ? formatFullDate(deadline) : "hạn chót"}`, detail: "Settle sẽ nhắc trên điện thoại trước hạn.", tone: "settled" as const };
+    return { title: `Đã đặt nhắc ${deadline ? formatFullDate(deadline) : "hạn chót"}`, detail: "Nhắc trên điện thoại.", tone: "settled" as const };
   }
   if (status === "needs-check") {
-    return { title: "Chưa đặt nhắc hạn", detail: "Hạn chót đọc chưa chắc chắn nên cần bạn kiểm tra trên giấy.", tone: "amber" as const };
+    return { title: "Chưa đặt nhắc hạn", detail: "Hạn chót chưa rõ. Kiểm tra lại giấy.", tone: "amber" as const };
   }
   if (status === "not-scheduled") {
-    return { title: "Mở bằng app để nhận nhắc hạn", detail: "Settle đã nhận ra hạn nhưng trang web không thể đặt thông báo trên điện thoại.", tone: "amber" as const };
+    return { title: "Mở bằng app để nhận nhắc hạn", detail: "Trang web không đặt được thông báo.", tone: "amber" as const };
   }
   if (status === "not-available") {
-    return { title: "Chưa đặt nhắc hạn", detail: "Giấy tờ này chưa có thời điểm nhắc hợp lệ để đặt tự động.", tone: "amber" as const };
+    return { title: "Chưa đặt nhắc hạn", detail: "Chưa có thời điểm nhắc hợp lệ.", tone: "amber" as const };
   }
   if (status === "cancelled") {
-    return { title: "Đã hoàn tác nhắc hạn", detail: "Thông báo này sẽ không hiện trên điện thoại.", tone: "amber" as const };
+    return { title: "Đã hoàn tác nhắc hạn", detail: "Thông báo đã tắt.", tone: "amber" as const };
   }
-  return { title: "Chưa cần đặt nhắc", detail: "Giấy tờ này chưa có hạn chót để theo dõi.", tone: "settled" as const };
+  return { title: "Chưa cần đặt nhắc", detail: "Giấy này không có hạn chót.", tone: "settled" as const };
 }
 
 function NotPaperworkScreen({ message, onBack }: { message: string; onBack: () => void }) {

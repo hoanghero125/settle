@@ -9,6 +9,7 @@ export type IconName =
   | "copy"
   | "document"
   | "refresh"
+  | "search"
   | "share"
   | "speaker";
 
@@ -58,6 +59,7 @@ export function Icon({ name, title, ...props }: IconProps) {
         </>
       )}
       {name === "refresh" && <path {...common} d="M19 7v4h-4M5 17v-4h4m-3.4-4.1A7 7 0 0 1 19 11m-.6 4.1A7 7 0 0 1 5 13" />}
+      {name === "search" && <><circle {...common} cx="10.8" cy="10.8" r="5.8" /><path {...common} d="m15.2 15.2 4.3 4.3" /></>}
       {name === "share" && (
         <>
           <circle {...common} cx="18" cy="5" r="2.2" />

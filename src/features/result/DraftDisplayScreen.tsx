@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { SettleLogo } from "@/components/ui/SettleLogo";
-import { draftActionLabel } from "@/features/shared/presentation";
 import type { Draft } from "@/lib/contracts";
 
 type DraftDisplayScreenProps = {
@@ -42,11 +41,11 @@ export function DraftDisplayScreen({
       </header>
 
       <section className="flex flex-1 flex-col justify-center py-7" aria-live="polite">
-        <p className="text-base font-medium text-ink-soft">Giơ màn hình này cho {draft.recipient}</p>
-        <p className="mt-5 text-4xl font-semibold leading-tight tracking-tight">{draft.original}</p>
+        <p className="text-base font-medium text-ink-soft">Dành cho {draft.recipient}</p>
+        <p className="mt-5 text-3xl font-semibold leading-tight tracking-tight">{draft.original}</p>
         <div className="mt-8 border-t border-line pt-5">
-          <p className="text-base font-medium text-ink-soft">Nghĩa tiếng Việt</p>
-          <p className="mt-2 text-xl leading-relaxed">{draft.vietnamese}</p>
+          <p className="text-base font-medium text-ink-soft">Tiếng Việt</p>
+          <p className="mt-2 text-lg leading-relaxed">{draft.vietnamese}</p>
         </div>
       </section>
 
@@ -62,7 +61,7 @@ export function DraftDisplayScreen({
           </Button>
           <Button variant="quiet" onClick={() => onShare(draft)}>
             <Icon name="share" className="size-5" />
-            {draftActionLabel(draft.kind)}
+            Chia sẻ
           </Button>
         </div>
         {copyNotice && <p className="text-center text-base text-ink-soft" role="status">{copyNotice}</p>}

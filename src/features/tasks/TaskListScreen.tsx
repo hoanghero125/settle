@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { SettleLogo } from "@/components/ui/SettleLogo";
 import type { StoredTask } from "@/lib/contracts";
-import { deadlineStatus, formatShortDate, urgencyLabel, urgencyTone } from "@/features/shared/presentation";
+import { formatShortDate, urgencyLabel, urgencyTone } from "@/features/shared/presentation";
 
 type TaskListScreenProps = {
   tasks: StoredTask[] | null;
@@ -10,32 +10,41 @@ type TaskListScreenProps = {
   onChooseFromLibrary: () => void;
   onOpenTask: (task: StoredTask) => void;
   onToggleDone: (task: StoredTask) => void;
+  onViewAll: () => void;
 };
 
-export function TaskListScreen({ tasks, onCapture, onChooseFromLibrary, onOpenTask, onToggleDone }: TaskListScreenProps) {
+const HOME_TASK_LIMIT = 2;
+
+export function TaskListScreen({ tasks, onCapture, onChooseFromLibrary, onOpenTask, onToggleDone, onViewAll }: TaskListScreenProps) {
   const openTasks = tasks?.filter((task) => !task.done) ?? [];
   const finishedTasks = tasks?.filter((task) => task.done) ?? [];
+  const visibleOpenTasks = openTasks.slice(0, HOME_TASK_LIMIT);
+  const visibleFinishedTasks = finishedTasks.slice(0, Math.max(0, HOME_TASK_LIMIT - visibleOpenTasks.length));
+  const visibleTaskCount = visibleOpenTasks.length + visibleFinishedTasks.length;
+  const hasMoreTasks = (tasks?.length ?? 0) > visibleTaskCount;
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <header className="shrink-0">
         <div className="flex items-center justify-between gap-4">
-          <SettleLogo label size="md" />
-          <span className="rounded-full border border-line bg-sheet px-3 py-2 text-sm font-semibold text-ink-soft">Trên máy</span>
+          <div className="flex items-center gap-2">
+            <SettleLogo size="md" />
+            <span className="text-lg font-bold tracking-tight">Settle</span>
+          </div>
+          <span className="rounded-full border border-line bg-sheet px-3 py-2 text-sm font-semibold text-ink-soft">Lưu trên máy</span>
         </div>
-        <div className="mt-7 flex items-end justify-between gap-4">
+        <div className="mt-6 flex items-end justify-between gap-4">
           <div>
-            <p className="text-base font-medium text-ink-soft">Hôm nay</p>
-            <h1 className="mt-1 text-3xl font-bold tracking-tight">Việc giấy tờ</h1>
+            <h1 className="text-2xl font-bold tracking-tight">Việc giấy tờ</h1>
           </div>
           {openTasks.length > 0 && <p className="pb-1 text-base font-semibold text-carbon">{openTasks.length} cần xử lý</p>}
         </div>
       </header>
 
-      <section className="min-h-0 flex-1 py-7" aria-live="polite" aria-busy={tasks === null}>
+      <section className="min-h-0 flex-1 overflow-y-auto py-6" aria-live="polite" aria-busy={tasks === null}>
         {tasks === null && <TaskListLoading />}
 
-        {tasks !== null && tasks.length === 0 && <EmptyState onCapture={onCapture} onChooseFromLibrary={onChooseFromLibrary} />}
+        {tasks !== null && tasks.length === 0 && <EmptyState />}
 
         {openTasks.length > 0 && (
           <div>
@@ -43,42 +52,51 @@ export function TaskListScreen({ tasks, onCapture, onChooseFromLibrary, onOpenTa
               {openTasks.length === 1 ? "1 việc đang chờ" : `${openTasks.length} việc đang chờ`}
             </p>
             <ul className="space-y-3" aria-label="Việc giấy tờ đang chờ">
-              {openTasks.map((task) => (
+              {visibleOpenTasks.map((task) => (
                 <TaskCard key={task.id} task={task} onOpenTask={onOpenTask} onToggleDone={onToggleDone} />
               ))}
             </ul>
           </div>
         )}
 
-        {finishedTasks.length > 0 && (
-          <div className={openTasks.length > 0 ? "mt-8" : ""}>
+        {visibleFinishedTasks.length > 0 && (
+          <div className={visibleOpenTasks.length > 0 ? "mt-7" : ""}>
             <p className="mb-3 text-base font-medium text-ink-soft">Đã xong</p>
             <ul className="space-y-3" aria-label="Việc giấy tờ đã xong">
-              {finishedTasks.map((task) => (
+              {visibleFinishedTasks.map((task) => (
                 <TaskCard key={task.id} task={task} onOpenTask={onOpenTask} onToggleDone={onToggleDone} />
               ))}
             </ul>
           </div>
+        )}
+
+        {hasMoreTasks && (
+          <button
+            type="button"
+            onClick={onViewAll}
+            className="mt-5 flex min-h-14 w-full items-center justify-center gap-2 rounded-sheet border border-line bg-sheet px-4 text-lg font-semibold text-carbon active:bg-line/50"
+          >
+            Xem tất cả {tasks?.length} việc
+            <Icon name="arrow-right" className="size-5" />
+          </button>
         )}
       </section>
 
-      {tasks !== null && tasks.length > 0 && (
-        <footer className="shrink-0 border-t border-line bg-paper pb-1 pt-4">
-          <Button className="w-full" onClick={onCapture}>
-            <Icon name="camera" className="size-5" />
-            Chụp giấy tờ
-          </Button>
-          <Button className="mt-2 w-full" variant="quiet" onClick={onChooseFromLibrary}>
-            <Icon name="document" className="size-5" />
-            Chọn ảnh từ thư viện
-          </Button>
-        </footer>
-      )}
+      <footer className="shrink-0 border-t border-line bg-paper pb-1 pt-4">
+        <Button className="w-full" onClick={onCapture}>
+          <Icon name="camera" className="size-5" />
+          Chụp giấy tờ
+        </Button>
+        <Button className="mt-2 w-full" variant="quiet" onClick={onChooseFromLibrary}>
+          <Icon name="document" className="size-5" />
+          Chọn ảnh từ thư viện
+        </Button>
+      </footer>
     </div>
   );
 }
 
-function TaskCard({
+export function TaskCard({
   task,
   onOpenTask,
   onToggleDone,
@@ -95,7 +113,7 @@ function TaskCard({
       <button
         type="button"
         onClick={() => onOpenTask(task)}
-        className="block w-full px-5 pb-3 pt-5 text-left active:bg-paper"
+        className="block w-full px-5 py-4 text-left active:bg-paper"
         aria-label={`Mở ${analysis.docType}`}
       >
         <div className="flex items-start justify-between gap-3">
@@ -108,13 +126,8 @@ function TaskCard({
             </span>
           )}
         </div>
-        <h2 className="mt-3 text-xl font-semibold leading-snug">{analysis.docType}</h2>
-        <p className="mt-1 line-clamp-2 text-base leading-relaxed text-ink-soft">{analysis.sender}</p>
-        {deadline && (
-          <p className={deadline.confidence === "low" ? "mt-3 text-base text-amber" : "mt-3 text-base text-ink-soft"}>
-            {deadline.label}: {deadline.confidence === "low" ? "cần kiểm tra" : deadlineStatus(deadline.date)}
-          </p>
-        )}
+        <h2 className="mt-2 line-clamp-2 text-lg font-semibold leading-snug">{analysis.docType}</h2>
+        <p className="mt-1 line-clamp-1 text-base leading-snug text-ink-soft">{analysis.sender}</p>
       </button>
       <div className="flex items-center justify-between border-t border-line px-5 py-2">
         <span className="text-sm text-ink-soft">{task.reminderId === null ? "Chưa có nhắc hạn" : "Đã đặt nhắc"}</span>
@@ -130,31 +143,17 @@ function TaskCard({
   );
 }
 
-function EmptyState({ onCapture, onChooseFromLibrary }: { onCapture: () => void; onChooseFromLibrary: () => void }) {
+function EmptyState() {
   return (
     <div className="flex h-full min-h-80 flex-col justify-center" aria-label="Chưa có việc giấy tờ">
       <div className="rounded-sheet border border-line bg-sheet p-5">
         <div className="flex size-12 items-center justify-center rounded-xl bg-carbon/10 text-carbon">
           <Icon name="camera" className="size-6" />
         </div>
-        <h2 className="mt-5 text-xl font-semibold">Chưa có việc cần xử lý</h2>
+        <h2 className="mt-5 text-xl font-semibold">Chụp giấy tờ đầu tiên</h2>
         <p className="mt-2 text-lg leading-relaxed text-ink-soft">
-          Chụp giấy tờ để Settle tự tìm hạn chót, xếp việc và soạn sẵn phần cần trả lời.
+          Settle tìm hạn chót và soạn sẵn phần cần trả lời.
         </p>
-        <dl className="mt-5 divide-y divide-line border-y border-line">
-          <div className="flex items-center gap-3 py-3 text-base">
-            <span className="grid size-7 shrink-0 place-items-center rounded-full bg-settled-wash text-settled"><Icon name="check" className="size-4" /></span>
-            <div><dt className="font-semibold">Đã xếp hồ sơ</dt><dd className="text-ink-soft">Lưu riêng trên máy của bạn</dd></div>
-          </div>
-          <div className="flex items-center gap-3 py-3 text-base">
-            <span className="grid size-7 shrink-0 place-items-center rounded-full bg-settled-wash text-settled"><Icon name="check" className="size-4" /></span>
-            <div><dt className="font-semibold">Đã chuẩn bị hành động</dt><dd className="text-ink-soft">Nhắc hạn và bản soạn khi đủ rõ</dd></div>
-          </div>
-        </dl>
-        <div className="mt-5 grid gap-2">
-          <Button className="w-full" onClick={onCapture}><Icon name="camera" className="size-5" /> Chụp giấy tờ</Button>
-          <Button className="w-full" variant="quiet" onClick={onChooseFromLibrary}><Icon name="document" className="size-5" /> Chọn ảnh từ thư viện</Button>
-        </div>
       </div>
     </div>
   );

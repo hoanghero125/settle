@@ -22,7 +22,15 @@ describe("mapOpenAIError", () => {
     expect(mapOpenAIError(APIError.generate(undefined, undefined, "raw", undefined))).toBe("network");
   });
 
-  it.each([400, 401, 403, 404, 422, 500, 503])("maps HTTP %i to internal", (status) => {
+  it.each([400, 413, 422])("maps malformed or unsupported input HTTP %i to bad_request", (status) => {
+    expect(mapOpenAIError(httpError(status))).toBe("bad_request");
+  });
+
+  it.each([401, 403, 404])("maps missing credentials or model HTTP %i to not_configured", (status) => {
+    expect(mapOpenAIError(httpError(status))).toBe("not_configured");
+  });
+
+  it.each([500, 503])("maps HTTP %i to internal", (status) => {
     expect(mapOpenAIError(httpError(status))).toBe("internal");
   });
 

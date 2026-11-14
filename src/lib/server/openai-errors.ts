@@ -1,4 +1,4 @@
-import { APIConnectionError, APIConnectionTimeoutError, RateLimitError } from "openai";
+import { APIConnectionError, APIConnectionTimeoutError, APIError, RateLimitError } from "openai";
 import type { ApiErrorCode } from "@/lib/contracts";
 
 /**
@@ -11,5 +11,9 @@ export function mapOpenAIError(error: unknown): ApiErrorCode {
   if (error instanceof APIConnectionTimeoutError) return "timeout";
   if (error instanceof RateLimitError) return "rate_limited";
   if (error instanceof APIConnectionError) return "network";
+  if (error instanceof APIError) {
+    if (error.status === 400 || error.status === 413 || error.status === 422) return "bad_request";
+    if (error.status === 401 || error.status === 403 || error.status === 404) return "not_configured";
+  }
   return "internal";
 }

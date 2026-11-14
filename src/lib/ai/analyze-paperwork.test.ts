@@ -64,6 +64,32 @@ describe("analyzePaperwork", () => {
     await expect(analyzePaperwork(input)).resolves.toMatchObject({ reminder: null });
   });
 
+  it("normalizes Traditional Chinese papers from Taiwan to zh-TW", async () => {
+    parse.mockResolvedValue({
+      output: [],
+      output_parsed: { ...residentTaxJa, language: "zh-Hant", country: "TW" },
+    });
+
+    await expect(analyzePaperwork(input)).resolves.toMatchObject({ language: "zh-TW" });
+  });
+
+  it("clears deadline data from a photograph that is not paperwork", async () => {
+    parse.mockResolvedValue({
+      output: [],
+      output_parsed: {
+        ...residentTaxJa,
+        isPaperwork: false,
+        notPaperworkReason: "Ảnh này không phải giấy tờ chính thức.",
+      },
+    });
+
+    await expect(analyzePaperwork(input)).resolves.toMatchObject({
+      urgency: "info_only",
+      deadline: null,
+      reminder: null,
+    });
+  });
+
   it("asks for another photo when the model marks the image unreadable", async () => {
     parse.mockResolvedValue({
       output: [],

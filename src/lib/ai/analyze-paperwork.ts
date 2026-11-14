@@ -26,10 +26,18 @@ function wasRefused(response: { output: Array<{ type: string; content?: Array<{ 
   );
 }
 
+function normalizePaperLanguage(analysis: PaperworkAnalysis): PaperworkAnalysis {
+  const taiwaneseChinese = new Set(["zh", "zh-hant", "zh-hant-tw"]);
+  if (analysis.country === "TW" && taiwaneseChinese.has(analysis.language.toLowerCase())) {
+    return { ...analysis, language: "zh-TW" };
+  }
+  return analysis;
+}
+
 /** The route, not the model, is the final safety gate for deadline-driven fields. */
 function applyDeadlineTiming(analysis: PaperworkAnalysis, request: ProcessRequest): PaperworkAnalysis {
   if (!analysis.isPaperwork || !analysis.deadline) {
-    return { ...analysis, urgency: "info_only", reminder: null };
+    return { ...analysis, urgency: "info_only", deadline: null, reminder: null };
   }
 
   const timing = deriveDeadlineTiming(analysis.deadline.date, request.now, request.timeZone);
@@ -101,7 +109,7 @@ export async function analyzePaperwork(request: ProcessRequest): Promise<Paperwo
         if (parsed.data.notPaperworkReason === IMAGE_UNREADABLE_REASON) {
           throw new PaperworkProcessingError("image_unreadable");
         }
-        return applyDeadlineTiming(parsed.data, request);
+        return applyDeadlineTiming(normalizePaperLanguage(parsed.data), request);
       }
       if (attempt === 1) throw new PaperworkProcessingError("invalid_model_output");
     }

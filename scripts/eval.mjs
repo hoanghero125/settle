@@ -33,7 +33,7 @@ function failedChecks(analysis, expected) {
     ["language", analysis.language === expected.language],
     ["country", analysis.country === expected.country],
     ["urgency", analysis.urgency === expected.urgency],
-    ["deadline", analysis.deadline?.date === expected.deadline],
+    ["deadline", (analysis.deadline?.date ?? null) === expected.deadline],
     ["amount", amountMatches(analysis, expected.amount)],
   ];
   return checks.filter(([, passed]) => !passed).map(([name]) => name);

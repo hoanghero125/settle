@@ -1,0 +1,16 @@
+# Who reviews what. Only the repository owner's username is known so far;
+# add the other two once they are collaborators (the areas are listed in CLAUDE.md).
+
+*                               @hoanghero125
+
+# Nguyễn Tiến Hoàng — AI and backend
+# /src/lib/ai/                  @<username>
+# /src/app/api/process/         @<username>
+# /src/app/api/feedback/        @<username>
+
+# Phùng Hải Đăng — mobile UI
+# /src/features/                @<username>
+# /src/components/              @<username>
+# /src/app/page.tsx             @<username>
+# /src/app/globals.css          @<username>
+# /src/lib/store/               @<username>

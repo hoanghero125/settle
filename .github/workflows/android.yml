@@ -1,0 +1,70 @@
+name: Android APK
+
+# Builds the native shell that loads the deployed web app. Run it by hand after
+# the Vercel URL is known, and again only when a Capacitor plugin or anything
+# under android/ changes. Features ship through Vercel, not through this.
+on:
+  workflow_dispatch:
+    inputs:
+      app_url:
+        description: "URL the app loads. Empty uses the APP_URL repository variable."
+        required: false
+        type: string
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    name: build apk
+    runs-on: ubuntu-latest
+    env:
+      APP_URL: ${{ inputs.app_url || vars.APP_URL }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: npm ci
+
+      - name: Fail early when no URL is set
+        run: |
+          if [ -z "$APP_URL" ]; then
+            echo "::error::APP_URL is empty. Pass app_url or set the APP_URL repository variable."
+            exit 1
+          fi
+
+      - run: npx cap sync android
+
+      - name: Build debug APK
+        working-directory: android
+        run: ./gradlew assembleDebug --no-daemon
+
+      - run: cp android/app/build/outputs/apk/debug/app-debug.apk settle.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: settle-apk
+          path: settle.apk
+
+      # A release asset has a public URL, so the phone can download it without signing in.
+      - name: Publish to the rolling apk-latest release
+        run: |
+          gh release view apk-latest >/dev/null 2>&1 || \
+            gh release create apk-latest --prerelease --title "Latest APK" \
+              --notes "Rolling build for the demo phone. Open this page on the phone and download settle.apk."
+          gh release upload apk-latest settle.apk --clobber
+
+      - name: Attach to the tagged release
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --generate-notes
+          gh release upload "$GITHUB_REF_NAME" settle.apk --clobber

@@ -16,8 +16,8 @@ let redis: Redis | null | undefined;
 function getRedis(): Redis | null {
   if (redis !== undefined) return redis;
 
-  const url = process.env.UPSTASH_REDIS_REST_URL?.trim();
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN?.trim();
+  const url = process.env.UPSTASH_REDIS_REST_URL?.trim() || process.env.KV_REST_API_URL?.trim();
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN?.trim() || process.env.KV_REST_API_TOKEN?.trim();
   if (!url || !token) {
     redis = null;
     return redis;
@@ -27,6 +27,7 @@ function getRedis(): Redis | null {
     url,
     token,
     enableTelemetry: false,
+    retry: false,
     signal: () => AbortSignal.timeout(750),
   });
   return redis;

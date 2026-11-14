@@ -1,4 +1,5 @@
 import { zodTextFormat } from "openai/helpers/zod";
+import { ZodError } from "zod";
 import {
   PaperworkAnalysisSchema,
   type ApiErrorCode,
@@ -8,6 +9,7 @@ import {
 import { getOpenAI } from "./client";
 import { getModels } from "./models";
 import { buildPaperworkInstructions, IMAGE_UNREADABLE_REASON } from "./prompt";
+import { deriveDeadlineTiming } from "./deadline-timing";
 import { mapOpenAIError } from "@/lib/server/openai-errors";
 
 /** A known processing failure that a route can translate with errorResponse. */
@@ -24,12 +26,38 @@ function wasRefused(response: { output: Array<{ type: string; content?: Array<{ 
   );
 }
 
-/** The route, not the model, is the final safety gate for automatic reminders. */
-function applyReminderSafety(analysis: PaperworkAnalysis): PaperworkAnalysis {
-  if (!analysis.deadline || analysis.deadline.confidence === "low") {
-    return { ...analysis, reminder: null };
+function normalizePaperLanguage(analysis: PaperworkAnalysis): PaperworkAnalysis {
+  const taiwaneseChinese = new Set(["zh", "zh-hant", "zh-hant-tw"]);
+  if (analysis.country === "TW" && taiwaneseChinese.has(analysis.language.toLowerCase())) {
+    return { ...analysis, language: "zh-TW" };
   }
   return analysis;
+}
+
+/** The route, not the model, is the final safety gate for deadline-driven fields. */
+function applyDeadlineTiming(analysis: PaperworkAnalysis, request: ProcessRequest): PaperworkAnalysis {
+  if (!analysis.isPaperwork || !analysis.deadline) {
+    return { ...analysis, urgency: "info_only", deadline: null, reminder: null };
+  }
+
+  const timing = deriveDeadlineTiming(analysis.deadline.date, request.now, request.timeZone);
+  if (!timing) return { ...analysis, urgency: "info_only", reminder: null };
+
+  if (analysis.deadline.confidence === "low") {
+    return { ...analysis, urgency: timing.urgency, reminder: null };
+  }
+
+  return {
+    ...analysis,
+    urgency: timing.urgency,
+    reminder: analysis.reminder
+      ? { ...analysis.reminder, remindAt: timing.remindAt }
+      : {
+          remindAt: timing.remindAt,
+          title: "Nhắc hạn giấy tờ",
+          body: "Hãy kiểm tra lại giấy tờ và hoàn tất đúng hạn.",
+        },
+  };
 }
 
 /**
@@ -41,25 +69,39 @@ export async function analyzePaperwork(request: ProcessRequest): Promise<Paperwo
   const models = getModels();
   if (!client || !models) throw new PaperworkProcessingError("not_configured");
 
+  const signal = AbortSignal.timeout(40_000);
+
   try {
     // Structured-output parse failures are the only retryable model result.
     for (let attempt = 0; attempt < 2; attempt++) {
-      const response = await client.responses.parse({
-        model: models.vision,
-        store: false,
-        reasoning: { effort: "low" },
-        instructions: buildPaperworkInstructions(request),
-        input: [
+      let response;
+      try {
+        response = await client.responses.parse(
           {
-            role: "user",
-            content: [
-              { type: "input_text", text: "Process this photographed paper." },
-              { type: "input_image", image_url: request.image, detail: "high" },
+            model: models.vision,
+            store: false,
+            reasoning: { effort: "low" },
+            instructions: buildPaperworkInstructions(request),
+            input: [
+              {
+                role: "user",
+                content: [
+                  { type: "input_text", text: "Process this photographed paper." },
+                  { type: "input_image", image_url: request.image, detail: "high" },
+                ],
+              },
             ],
+            text: { format: zodTextFormat(PaperworkAnalysisSchema, "paperwork_analysis") },
           },
-        ],
-        text: { format: zodTextFormat(PaperworkAnalysisSchema, "paperwork_analysis") },
-      });
+          { signal },
+        );
+      } catch (error) {
+        if (error instanceof ZodError) {
+          if (attempt === 1) throw new PaperworkProcessingError("invalid_model_output");
+          continue;
+        }
+        throw error;
+      }
 
       if (wasRefused(response)) throw new PaperworkProcessingError("model_refused");
       const parsed = PaperworkAnalysisSchema.safeParse(response.output_parsed);
@@ -67,7 +109,7 @@ export async function analyzePaperwork(request: ProcessRequest): Promise<Paperwo
         if (parsed.data.notPaperworkReason === IMAGE_UNREADABLE_REASON) {
           throw new PaperworkProcessingError("image_unreadable");
         }
-        return applyReminderSafety(parsed.data);
+        return applyDeadlineTiming(normalizePaperLanguage(parsed.data), request);
       }
       if (attempt === 1) throw new PaperworkProcessingError("invalid_model_output");
     }
@@ -75,6 +117,7 @@ export async function analyzePaperwork(request: ProcessRequest): Promise<Paperwo
     throw new PaperworkProcessingError("invalid_model_output");
   } catch (error) {
     if (error instanceof PaperworkProcessingError) throw error;
+    if (signal.aborted) throw new PaperworkProcessingError("timeout");
     throw new PaperworkProcessingError(mapOpenAIError(error));
   }
 }

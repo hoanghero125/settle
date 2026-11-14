@@ -1,1 +1,58 @@
-[]
+[
+  {
+    "country": "JP",
+    "organization": "外国人技能実習機構 (OTIT, tư vấn cho thực tập sinh kỹ năng)",
+    "phone": "0120-250-168",
+    "hours": "Thứ 2–6: 11:00–19:00; thứ 7: 9:00–17:00",
+    "source": "https://www.support.otit.go.jp/soudan/vi/"
+  },
+  {
+    "country": "JP",
+    "organization": "厚生労働省 外国人労働者向け相談ダイヤル (Bộ Lao động Nhật, tư vấn cho lao động nước ngoài)",
+    "phone": "0570-001-706",
+    "hours": "Thứ 2–6: 10:00–15:00 (nghỉ 12:00–13:00)",
+    "source": "https://www.check-roudou.mhlw.go.jp/soudan/foreigner.html"
+  },
+  {
+    "country": "JP",
+    "organization": "厚生労働省 労働条件相談ほっとライン (Bộ Lao động Nhật, tư vấn điều kiện lao động)",
+    "phone": "0120-531-406",
+    "hours": "Thứ 3, 4, 6: 17:00–22:00; thứ 7, CN: 9:00–21:00",
+    "source": "https://www.check-roudou.mhlw.go.jp/soudan/foreigner.html"
+  },
+  {
+    "country": "JP",
+    "organization": "出入国在留管理庁 外国人在留総合インフォメーションセンター (Cục Xuất nhập cảnh, thông tin lưu trú)",
+    "phone": "0570-013904",
+    "hours": "Thứ 2–6: 8:30–17:15",
+    "source": "https://www.moj.go.jp/isa/consultation/center/index.html"
+  },
+  {
+    "country": "KR",
+    "organization": "법무부 외국인종합안내센터 (Bộ Tư pháp, hướng dẫn tổng hợp cho người nước ngoài)",
+    "phone": "1345",
+    "hours": "Thứ 2–6: 9:00–18:00 (sau 18:00 không còn tiếng Việt)",
+    "source": "https://www.immigration.go.kr/immigration/1530/subview.do"
+  },
+  {
+    "country": "KR",
+    "organization": "다누리콜센터 (tổng đài hỗ trợ gia đình đa văn hóa, phụ nữ di trú)",
+    "phone": "1577-1366",
+    "hours": "24/24, cả năm",
+    "source": "https://www.liveinkorea.kr/web/lay1/S1T40C44/contents.do"
+  },
+  {
+    "country": "TW",
+    "organization": "勞動部勞動力發展署 1955勞工諮詢申訴專線 (Bộ Lao động, tư vấn và khiếu nại cho lao động)",
+    "phone": "1955",
+    "hours": "24/24, cả năm",
+    "source": "https://fw.wda.gov.tw/wda-employer/home/lazypg/index?locale=vi"
+  },
+  {
+    "country": "TW",
+    "organization": "內政部移民署 外來人士在臺生活諮詢服務熱線 (Sở Di dân, tư vấn đời sống cho người nước ngoài)",
+    "phone": "1990",
+    "hours": "Thứ 2–6: 9:00–21:00 (trừ ngày lễ)",
+    "source": "https://www.immigration.gov.tw/5385/7445/7451/7457/7484/371259/cp_news"
+  }
+]

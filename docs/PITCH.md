@@ -30,7 +30,7 @@ Settle xử lý giấy tờ tiếng nước ngoài thay cho người Việt ở 
 2. Công ty xuất khẩu lao động và trường tiếng: giới thiệu trong khóa định hướng trước khi đi.
 3. Mỗi lần người dùng chia sẻ bản soạn sẵn cho người thân là một lần giới thiệu.
 
-**Ai trả tiền:** các tổ chức đang trả lương phiên dịch để làm đúng việc này cho từng lao động (___, nguồn).
+**Ai trả tiền:** doanh nghiệp tiếp nhận đang trả phí quản lý cho tổ chức giám sát, và nhà nước đang trả cho các đường dây tư vấn tiếng Việt (`EVIDENCE.md` mục 3). Chưa tìm được nguồn cho số phiên dịch viên các tổ chức này thuê: không nêu con số đó khi pitch.
 
 **Đã có người dùng thật:** ___ lượt xử lý từ ___ người trong hôm nay; 👍 ___ / 👎 ___.
 

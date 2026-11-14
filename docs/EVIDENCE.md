@@ -66,17 +66,19 @@ Thực tập sinh kỹ năng:
 | Hàn Quốc: tổng người nước ngoài lưu trú | 2.700.430 | 31/01/2026 | [법무부 (XLSX)](https://www.immigration.go.kr/bbs/immigration/227/492043/download.do) |
 
 ## 5. Đường dây hỗ trợ có tiếng Việt (để đưa vào app sau khi kiểm tra lại)
-| Nước | Tổ chức | Số | Giờ | Nguồn |
-|---|---|---|---|---|
-| Nhật | 外国人技能実習機構 (OTIT) — tư vấn tiếng Việt | 0120-250-168 | Thứ 2–6: 11:00–19:00; thứ 7: 9:00–17:00; nghỉ lễ Nhật và 29/12–3/1 | [OTIT](https://www.support.otit.go.jp/soudan/vi/) |
-| Nhật | 厚生労働省 — 外国人労働者向け相談ダイヤル (tiếng Việt) | 0570-001-706 (có tính cước) | Thứ 2–6 (ô ngày dùng chung trong bảng, cần kiểm tra lại): 10:00–15:00, nghỉ 12:00–13:00 | [厚生労働省](https://www.check-roudou.mhlw.go.jp/soudan/foreigner.html) |
-| Nhật | 厚生労働省 — 労働条件相談ほっとライン (tiếng Việt) | 0120-531-406 (miễn phí) | Tiếng Việt: thứ 3, thứ 4 và thứ 6 đến CN; giờ chung của đường dây: ngày thường 17:00–22:00, thứ 7/CN/ngày lễ 9:00–21:00 | [厚生労働省](https://www.check-roudou.mhlw.go.jp/soudan/foreigner.html) |
-| Nhật | 出入国在留管理庁 — 外国人在留総合インフォメーションセンター (điện thoại có tiếng Việt) | 0570-013904; IP/từ nước ngoài 03-5796-7112 | Ngày thường 8:30–17:15; nghỉ cuối tuần, lễ, 29/12–3/1 | [出入国在留管理庁](https://www.moj.go.jp/isa/consultation/center/index.html) |
-| Nhật | 外国人在留支援センター (FRESC) — trang không ghi có tiếng Việt, cần kiểm tra | 0570-011000 | Ngày thường 9:00–17:00 | [出入国在留管理庁](https://www.moj.go.jp/isa/support/fresc/fresc01.html) |
-| Hàn Quốc | 법무부 외국인종합안내센터 — 20 thứ tiếng, có tiếng Việt | 1345; từ nước ngoài +82-2-1345 | Ngày thường 09:00–22:00; sau 18:00 chỉ tiếng Hàn, Anh, Trung | [법무부](https://www.immigration.go.kr/immigration/1530/subview.do) |
-| Hàn Quốc | 다누리콜센터 — 15 thứ tiếng, trang không liệt kê tiếng Việt, cần kiểm tra | 1577-1366 | 24 giờ, 365 ngày | [다누리 포털](https://www.liveinkorea.kr/portal/KOR/page/contents.do?menuSeq=3723&pageSeq=38) |
-| Đài Loan | 勞動部勞動力發展署 — 1955 勞工諮詢申訴專線, miễn phí, có thông dịch tiếng Việt | 1955 | 24 giờ, quanh năm | [勞動力發展署](https://www.wda.gov.tw/News_Content.aspx?n=277&s=18960); tiếng Việt theo [勞動部 (2019)](https://www.mol.gov.tw/announcement/2099/41886/) |
-| Đài Loan | 內政部移民署 — 外來人士在臺生活諮詢服務熱線, 7 thứ tiếng, có tiếng Việt | 1990; từ nước ngoài 886-800-001990 | không tìm được nguồn ghi giờ | [移民署](https://www.immigration.gov.tw/5385/7445/7451/7457/7484/), [thông cáo 05/11/2026](https://www.immigration.gov.tw/5385/7229/7238/420607/) |
+Đã mở lại từng trang chính thức ngày 14/11/2026 để đối chiếu số (từng chữ số), tiếng Việt và giờ. Chỉ các dòng "Đã xác nhận" được đưa vào `src/data/support-contacts.json`.
+
+| Nước | Tổ chức | Số | Giờ | Nguồn | Kiểm tra lại |
+|---|---|---|---|---|---|
+| Nhật | 外国人技能実習機構 (OTIT) — tư vấn tiếng Việt | 0120-250-168 | Thứ 2–6: 11:00–19:00; thứ 7: 9:00–17:00; nghỉ lễ Nhật và 29/12–3/1 | [OTIT](https://www.support.otit.go.jp/soudan/vi/) | Đã xác nhận 14/11/2026 (trang tiếng Việt; nghe hướng dẫn xong bấm phím 1) |
+| Nhật | 厚生労働省 — 外国人労働者向け相談ダイヤル (tiếng Việt) | 0570-001-706 (có tính cước) | Thứ 2–6: 10:00–15:00, nghỉ 12:00–13:00; nghỉ 29/12–3/1 | [厚生労働省](https://www.check-roudou.mhlw.go.jp/soudan/foreigner.html) | Đã xác nhận 14/11/2026; ô "月〜金" trong HTML có `rowspan="6"`, phủ từ tiếng Anh đến tiếng Việt |
+| Nhật | 厚生労働省 — 労働条件相談ほっとライン (tiếng Việt) | 0120-531-406 (miễn phí) | Tiếng Việt: thứ 3, thứ 4 và thứ 6 đến CN; giờ chung của đường dây: ngày thường 17:00–22:00, thứ 7/CN/ngày lễ 9:00–21:00; nghỉ 29/12–3/1 | [厚生労働省](https://www.check-roudou.mhlw.go.jp/soudan/foreigner.html) | Đã xác nhận 14/11/2026 |
+| Nhật | 出入国在留管理庁 — 外国人在留総合インフォメーションセンター (điện thoại có tiếng Việt) | 0570-013904; IP/từ nước ngoài 03-5796-7112 | Ngày thường 8:30–17:15; nghỉ cuối tuần, lễ, 29/12–3/1 | [出入国在留管理庁](https://www.moj.go.jp/isa/consultation/center/index.html) | Đã xác nhận 14/11/2026 (trang cảnh báo hay có người gọi nhầm số) |
+| Nhật | 外国人在留支援センター (FRESC) — tổng đài chuyển tới 9 cơ quan, hướng dẫn chỉ tiếng Nhật/Anh | 0570-011000; IP/từ nước ngoài 03-5363-3013 | Ngày thường 9:00–17:00; nghỉ thứ 7, CN, lễ, Tết | [出入国在留管理庁](https://www.moj.go.jp/isa/support/fresc/fresc01.html), [trang liên hệ FRESC](https://www.moj.go.jp/isa/support/fresc/fresc_4.html) | Không đưa vào: số và giờ khớp, nhưng trang không ghi đường dây có tiếng Việt (chỉ một số cơ quan phía sau có) |
+| Hàn Quốc | 법무부 외국인종합안내센터 — 20 thứ tiếng, có tiếng Việt | 1345 (có tính cước); từ nước ngoài +82-2-1345 | Ngày thường 09:00–22:00; sau 18:00 chỉ tiếng Hàn, Anh, Trung | [법무부](https://www.immigration.go.kr/immigration/1530/subview.do) | Đã xác nhận 14/11/2026 (gọi xong chọn số ngôn ngữ rồi bấm *) |
+| Hàn Quốc | 다누리콜센터 — 15 thứ tiếng, có tiếng Việt | 1577-1366 | 24 giờ, 365 ngày (ngoài Seoul, sau 18:00 tự chuyển về số chính) | [다누리 (trang mới)](https://www.liveinkorea.kr/web/lay1/S1T40C44/contents.do) | Đã xác nhận 14/11/2026; link cũ `liveinkorea.kr/portal/...` nay chuyển về trang chủ, trang mới có ghi 베트남어 |
+| Đài Loan | 勞動部勞動力發展署 — 1955 勞工諮詢申訴專線, miễn phí, có thông dịch tiếng Việt | 1955 | 24 giờ, quanh năm | [勞動力發展署](https://www.wda.gov.tw/News_Content.aspx?n=277&s=18960) (không nêu tên ngôn ngữ); tiếng Việt theo [外國人勞動權益網 (tiếng Việt)](https://fw.wda.gov.tw/wda-employer/home/lazypg/index?locale=vi) và [勞動部 (2019)](https://www.mol.gov.tw/1607/1632/1640/44643/) | Đã xác nhận 14/11/2026; link 勞動部 cũ nay chuyển sang địa chỉ trên |
+| Đài Loan | 內政部移民署 — 外來人士在臺生活諮詢服務熱線, 7 thứ tiếng, có tiếng Việt | 1990; từ nước ngoài 886-800-001990 | Tiếng Việt: thứ 2–6, 9:00–21:00, trừ ngày lễ và ngày nghỉ; chỉ tiếng Trung, Anh, Nhật là 24 giờ | [移民署](https://www.immigration.gov.tw/5385/7445/7451/7457/7484/), [thông cáo 05/11/2026](https://www.immigration.gov.tw/5385/7229/7238/420607/), [tờ gấp 2026 (ảnh)](https://www.immigration.gov.tw/5385/7445/7451/7457/7484/371259/cp_news) | Đã xác nhận 14/11/2026; giờ lấy từ mục tiếng Việt trong tờ gấp chính thức |
 
 ## 6. Bằng chứng tự thu trong ngày (đội điền)
 - [ ] Giấy tờ thật nhận từ người Việt ở nước ngoài: số lượng, nước, phản hồi

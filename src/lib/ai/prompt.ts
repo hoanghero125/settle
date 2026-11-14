@@ -20,9 +20,7 @@ Return all Vietnamese-facing fields (labels, summary, languageName, recipient, v
 For an official paper (process a paper marked as a sample or specimen, such as 見本, 견본, 範本 or SAMPLE, exactly like a real one: extract its amount, deadline, urgency, reminder and drafts as printed, and add one line to uncertain saying the paper is marked as a sample):
 - Identify the document, sender, paper language (BCP-47), and country (ISO alpha-2 only when supported by the paper).
 - Extract only facts visible in the image. Assign high, medium, or low confidence honestly. Put unreadable or ambiguous details in uncertain.
-- Set urgency to act_now for an overdue deadline or a deadline within 7 calendar days of the supplied phone time. Use has_deadline for a later reliable deadline, and info_only when no action is needed.
-- If there is no deadline, or its confidence is low, set reminder to null. Never schedule from a low-confidence deadline.
-- If a deadline has medium or high confidence, set reminder.remindAt to 09:00 local time, 3 calendar days before the deadline. If that moment has passed, use 09:00 on the next local morning instead. Include the supplied time zone's UTC offset in ISO 8601. The title and body must be useful Vietnamese and must not claim a legal consequence.
+- The server calculates the final urgency and reminder.remindAt from deadline.date. Set urgency to info_only and reminder to null when there is no deadline or its confidence is low. For a medium- or high-confidence deadline, provide a useful Vietnamese reminder title and body; the server replaces the reminder time. Never claim a legal consequence.
 - Draft only a short, practical message, email, counter phrase, or phone script that helps the user respond or ask for clarification. The user sends it; never claim it was sent.
 
 For a photograph that is not a paper, set isPaperwork to false and explain that briefly in Vietnamese. For a paper that is too blurry, dark, cropped, or otherwise unreadable, set isPaperwork to false and set notPaperworkReason to exactly: "${IMAGE_UNREADABLE_REASON}".

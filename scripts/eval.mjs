@@ -22,22 +22,25 @@ async function imageDataUrl(file) {
 
 function amountMatches(analysis, amount) {
   if (amount === undefined) return true;
-  const expected = String(amount).replaceAll(/\s/g, "");
-  return analysis.keyFacts.some((fact) => `${fact.value}${fact.sourceText}`.replaceAll(/\s/g, "").includes(expected));
+  if (amount === null) return analysis.keyFacts.length === 0;
+  const expected = String(amount).replaceAll(/\D/g, "");
+  return analysis.keyFacts.some((fact) => `${fact.value}${fact.sourceText}`.replaceAll(/\D/g, "").includes(expected));
 }
 
 function failedChecks(analysis, expected) {
   const checks = [
+    ["isPaperwork", analysis.isPaperwork === expected.isPaperwork],
     ["language", analysis.language === expected.language],
+    ["country", analysis.country === expected.country],
     ["urgency", analysis.urgency === expected.urgency],
-    ["deadline", analysis.deadline?.date === expected.deadline?.date],
+    ["deadline", analysis.deadline?.date === expected.deadline],
     ["amount", amountMatches(analysis, expected.amount)],
   ];
   return checks.filter(([, passed]) => !passed).map(([name]) => name);
 }
 
-async function evaluate(sample) {
-  if (!sample.id || !sample.image || !sample.language || !sample.urgency) {
+async function evaluate(sample, now) {
+  if (!sample.id || !sample.file || !sample.timeZone || !sample.expected) {
     throw new Error("expected.json: mỗi mẫu cần id, image, language và urgency.");
   }
 
@@ -46,16 +49,16 @@ async function evaluate(sample) {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
-      image: await imageDataUrl(path.join(PAPERS_DIR, sample.image)),
-      now: new Date().toISOString(),
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      image: await imageDataUrl(path.join(PAPERS_DIR, sample.file)),
+      now,
+      timeZone: sample.timeZone,
     }),
     signal: AbortSignal.timeout(55_000),
   });
   const elapsedMs = Math.round(performance.now() - startedAt);
   const payload = await response.json().catch(() => null);
   if (!response.ok || !payload?.analysis) return { id: sample.id, elapsedMs, failed: ["api_response"] };
-  return { id: sample.id, elapsedMs, failed: failedChecks(payload.analysis, sample) };
+  return { id: sample.id, elapsedMs, failed: failedChecks(payload.analysis, sample.expected) };
 }
 
 async function main() {
@@ -65,13 +68,13 @@ async function main() {
   } catch {
     throw new Error("Chưa có src/fixtures/papers/expected.json và bộ ảnh đã được phép dùng để đánh giá.");
   }
-  const expected = JSON.parse(expectedJson);
-  if (!Array.isArray(expected) || expected.length === 0) {
+  const suite = JSON.parse(expectedJson);
+  if (!suite.now || !Array.isArray(suite.papers) || suite.papers.length === 0) {
     throw new Error("src/fixtures/papers/expected.json phải là mảng không rỗng.");
   }
 
   const results = [];
-  for (const sample of expected) results.push(await evaluate(sample));
+  for (const sample of suite.papers) results.push(await evaluate(sample, suite.now));
 
   console.table(
     results.map((result) => ({

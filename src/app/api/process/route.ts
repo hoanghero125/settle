@@ -1,3 +1,4 @@
+import { after } from "next/server";
 import { ProcessRequestSchema } from "@/lib/contracts";
 import { analyzePaperwork, PaperworkProcessingError } from "@/lib/ai/analyze-paperwork";
 import { incrementMetric } from "@/lib/ai/feedback";
@@ -16,7 +17,7 @@ export async function POST(request: Request): Promise<Response> {
 
   try {
     const analysis = await analyzePaperwork(parsed.data);
-    await incrementMetric("processed");
+    after(() => incrementMetric("processed"));
     return Response.json({ analysis });
   } catch (error) {
     if (error instanceof PaperworkProcessingError) return errorResponse(error.code);

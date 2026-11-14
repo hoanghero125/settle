@@ -47,6 +47,7 @@ export async function analyzePaperwork(request: ProcessRequest): Promise<Paperwo
       const response = await client.responses.parse({
         model: models.vision,
         store: false,
+        reasoning: { effort: "low" },
         instructions: buildPaperworkInstructions(request),
         input: [
           {

@@ -46,6 +46,7 @@ describe("analyzePaperwork", () => {
     expect(parse.mock.calls[0]?.[0]).toMatchObject({
       model: "vision-model",
       store: false,
+      reasoning: { effort: "low" },
       input: [{ content: [{ type: "input_text" }, { type: "input_image", image_url: input.image }] }],
     });
   });

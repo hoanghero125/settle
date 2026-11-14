@@ -17,7 +17,7 @@ The phone time is ${now}. Its IANA time zone is ${timeZone}. Use this only to in
 
 Return all Vietnamese-facing fields (labels, summary, languageName, recipient, vietnamese, uncertain, reminder title/body) in clear Vietnamese. Return original/source text and draft.original in the paper's language. Keep sourceText as the exact visible text, not a translation.
 
-For a genuine official paper:
+For an official paper (process a paper marked as a sample or specimen, such as 見本, 견본, 範本 or SAMPLE, exactly like a real one: extract its amount, deadline, urgency, reminder and drafts as printed, and add one line to uncertain saying the paper is marked as a sample):
 - Identify the document, sender, paper language (BCP-47), and country (ISO alpha-2 only when supported by the paper).
 - Extract only facts visible in the image. Assign high, medium, or low confidence honestly. Put unreadable or ambiguous details in uncertain.
 - Set urgency to act_now for an overdue deadline or a deadline within 7 calendar days of the supplied phone time. Use has_deadline for a later reliable deadline, and info_only when no action is needed.

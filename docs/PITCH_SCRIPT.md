@@ -12,22 +12,42 @@ Kịch bản này để đọc thành lời, gần như không có từ kỹ thu
 | 4:05 đến 4:40 | Người dùng đầu tiên và mở rộng | 3 |
 | 4:40 đến 5:00 | Kết | |
 
+## Bối cảnh demo
+
+Tờ giấy chụp trực tiếp là **giấy báo phí bảo hiểm y tế tiếng Hàn** (`docs/demo-papers/ko-health-insurance.pdf`). Tờ thuế tiếng Nhật đã chụp từ trước nên đang nằm sẵn trong danh sách, và nó có vai trò riêng trong demo: chứng minh việc cũ còn nguyên sau khi tắt mở app, và cho thấy Settle xếp việc gấp lên trên.
+
+Kết quả đúng mà app phải cho ra với tờ tiếng Hàn (đã chạy thử thật hai lần):
+
+| Mục | Giá trị |
+|---|---|
+| Loại giấy | Thông báo phí bảo hiểm y tế tháng 11 năm 2026 |
+| Nơi gửi | 국민건강보험공단 (cơ quan bảo hiểm y tế Hàn Quốc), chi nhánh mẫu |
+| Mức độ | Có hạn |
+| Số tiền | 126.880 won (112.340 phí bảo hiểm y tế cộng 14.540 phí chăm sóc dài hạn) |
+| Hạn | 10 tháng 12 năm 2026 |
+| Câu soạn sẵn | Một câu tiếng Hàn hỏi nhân viên xác nhận số tiền và cách nộp, kèm nghĩa tiếng Việt |
+| Ghi chú của app | Giấy được đánh dấu là bản mẫu (견본) |
+| Thời gian | Hai lần đo là 8 giây và 15 giây, nên chuẩn bị lời nói cho 15 giây chờ |
+
+Sau khi chụp xong, danh sách sẽ có hai việc: thuế Nhật hạn 18/11 (Cần làm ngay) ở trên, bảo hiểm Hàn hạn 10/12 (Có hạn) ở dưới.
+
 ## Trước khi lên
 
 - Điện thoại bật 4G, tắt wifi, âm lượng lớn, tắt chế độ im lặng, màn hình không tự tắt.
-- Trong app đã có sẵn một hai việc từ lần chụp trước.
-- Laptop mở sẵn ba file trong `docs/demo-papers/`, tờ tiếng Nhật ở trên cùng.
-- Ba ảnh mẫu đã lưu trong thư viện ảnh của điện thoại, phòng khi chụp màn hình bị lóa.
+- Trong danh sách chỉ có đúng một việc: tờ thuế tiếng Nhật. Xóa các việc thử khác, và xóa việc bảo hiểm Hàn nếu bạn đã chụp thử nó.
+- Laptop mở sẵn `ko-health-insurance.pdf` toàn màn hình, độ sáng cao.
+- Ảnh `ko-health-insurance.jpg` đã lưu trong thư viện ảnh của điện thoại, phòng khi chụp màn hình bị lóa.
+- Tờ Đài Loan (`zh-tw-income-tax.pdf`) mở sẵn ở tab bên cạnh, dùng khi giám khảo không đưa giấy của họ.
 
 ## Kịch bản
 
 ### 0:00 Câu chuyện mở đầu
 
-Mời anh chị hình dung một người tên Lan. Chị là công nhân người Việt, sang Nhật năm thứ hai, tiếng Nhật đủ để chào hỏi và đi chợ.
+Mời anh chị hình dung một bạn tên Minh, du học sinh người Việt ở Hàn Quốc, năm thứ hai. Tiếng Hàn của Minh đủ để nghe giảng và đi chợ.
 
-Một buổi chiều đi làm về, chị mở hộp thư và thấy một phong bì của tòa thị chính. Bên trong là một tờ giấy kín chữ Nhật, vài con số, một cái dấu đỏ. Chị không biết đó là hóa đơn, là thông báo, hay là thư phạt.
+Một buổi chiều Minh mở hộp thư và thấy một phong bì của cơ quan bảo hiểm y tế. Bên trong là một tờ giấy kín chữ Hàn, một bảng số, một cái dấu đỏ. Minh đọc được vài chữ, nhưng không chắc đây là hóa đơn phải đóng, là thông báo cho biết, hay là thư nhắc nợ.
 
-Chị chụp hình, gửi vào nhóm chat của mấy người đi trước, rồi chờ. Có khi tối đó có người trả lời. Có khi hai ngày sau. Có khi tờ giấy nằm trong ngăn kéo cho tới lúc quá hạn.
+Minh chụp hình, gửi vào nhóm chat của mấy anh chị đi trước, rồi chờ. Có khi tối đó có người trả lời. Có khi hai ngày sau. Có khi tờ giấy nằm trong ngăn kéo cho tới lúc quá hạn.
 
 ### 0:45 Vấn đề
 
@@ -43,37 +63,37 @@ Tụi em xin làm ngay trên chiếc điện thoại này.
 
 [Vuốt tắt hẳn Settle, rồi mở lại từ màn hình chính]
 
-Đây là app đã cài trên máy. Em vừa tắt hẳn rồi mở lại, và những việc giấy tờ từ lần trước vẫn còn ở đây.
+Đây là app đã cài trên máy. Em vừa tắt hẳn rồi mở lại. Tờ thuế tiếng Nhật em chụp từ trước vẫn nằm ở đây, kèm hạn của nó.
 
-[Bấm Chụp giấy tờ, chụp tờ tiếng Nhật trên laptop]
+[Bấm Chụp giấy tờ, chụp tờ tiếng Hàn trên laptop]
 
-Em chụp một tờ giấy báo thuế tiếng Nhật. Em không gõ gì và không hỏi gì.
+Bây giờ là tờ giấy của Minh: giấy báo phí bảo hiểm y tế, tiếng Hàn. Em chỉ chụp. Em không gõ gì và không hỏi gì.
 
-[Trong lúc app xử lý, khoảng 10 giây]
+[Trong lúc app xử lý, 8 đến 15 giây]
 
-Trong lúc chờ, em xin nói rõ: tờ này là giấy mẫu tụi em tự dựng theo bố cục của giấy thật, vì giấy thật có thông tin cá nhân của người ta.
+Trong lúc chờ, em xin nói rõ: tờ này là giấy mẫu tụi em tự dựng theo bố cục của giấy thật, vì giấy thật có thông tin cá nhân của người ta. Phần đọc và xử lý thì đang chạy thật.
 
 [Kết quả hiện ra. Chỉ vào từng phần khi nói]
 
-Settle đã đọc xong. Con dấu đỏ ở trên cùng cho chị Lan biết ngay: việc này cần làm ngay.
+Settle đã đọc xong. Đây là thông báo phí bảo hiểm y tế tháng 11. Con dấu ở trên cùng ghi "Có hạn": Minh phải đóng, nhưng chưa gấp.
 
-Đây là giấy báo nộp thuế cư trú. Ba mươi tư nghìn năm trăm yên, hạn ngày 18 tháng 11. Trên giấy, ngày đó được ghi theo niên hiệu của Nhật. Settle tự đổi sang dương lịch.
+Số tiền là 126.880 won, hạn ngày 10 tháng 12. Ngay dưới mỗi con số là đúng dòng chữ Hàn trên giấy, để Minh hoặc người quen đối chiếu.
 
-Kéo xuống một chút là câu tiếng Nhật đã soạn sẵn, kèm nghĩa tiếng Việt. Ra quầy, chị Lan chỉ cần giơ điện thoại cho nhân viên.
+Kéo xuống là câu tiếng Hàn đã soạn sẵn để hỏi lại số tiền và cách nộp, kèm nghĩa tiếng Việt. Ra quầy, Minh chỉ cần giơ điện thoại.
 
 [Bấm quay lại trang chủ]
 
-Và việc này đã nằm trong danh sách, xếp theo hạn. Chị không phải ghi lại ở đâu cả.
+Việc này đã vào danh sách. Tờ thuế Nhật hạn 18 tháng 11 nằm trên, tờ bảo hiểm Hàn hạn 10 tháng 12 nằm dưới. Settle tự xếp việc gấp lên trước, Minh không phải ghi lại ở đâu cả.
 
-[Chụp tờ tiếng Hàn, hoặc đưa tay mời giám khảo]
+[Đưa tay mời giám khảo. Nếu không ai đưa giấy, chụp tờ Đài Loan]
 
-Settle đọc được nhiều thứ tiếng. Em chụp thêm một tờ tiếng Hàn. Nếu anh chị có một tờ giấy tiếng nước ngoài nào trong túi, mời anh chị đưa em thử.
+Anh chị vừa thấy tiếng Nhật và tiếng Hàn. Nếu anh chị có một tờ giấy tiếng nước ngoài nào trong túi, mời anh chị đưa em thử.
 
 ### 3:15 Vì sao tin được
 
 Có ba điều tụi em giữ rất chặt.
 
-Mỗi con số Settle đưa ra đều đi kèm đúng dòng chữ gốc trên giấy, để người dùng hoặc người quen của họ đối chiếu được.
+Mỗi con số Settle đưa ra đều đi kèm đúng dòng chữ gốc trên giấy, như anh chị vừa thấy.
 
 Chỗ nào chưa đọc chắc, app nói thẳng là chưa chắc và nhắc người dùng nhờ kiểm tra lại.
 
@@ -81,7 +101,7 @@ Việc gì gửi ra ngoài, như tin nhắn hay câu trả lời, thì Settle ch
 
 ### 3:40 Bằng chứng
 
-Hôm nay tụi em thử Settle trên ba tờ giấy mẫu tiếng Nhật, Hàn, Trung và một tấm ảnh phong cảnh. Settle đúng cả bốn: đúng số tiền, đúng hạn, đúng mức độ gấp, và nhận ra tấm ảnh kia không phải giấy tờ. Mỗi tờ mất khoảng mười giây.
+Hôm nay tụi em thử Settle trên ba tờ giấy mẫu tiếng Nhật, Hàn, Trung và một tấm ảnh phong cảnh. Settle đúng cả bốn: đúng số tiền, đúng hạn, đúng mức độ gấp, và nhận ra tấm ảnh kia không phải giấy tờ.
 
 Đây là một bộ thử nhỏ và là giấy mô phỏng. Tụi em xin nói rõ như vậy.
 
@@ -89,13 +109,13 @@ Hôm nay tụi em thử Settle trên ba tờ giấy mẫu tiếng Nhật, Hàn, 
 
 Người dùng đầu tiên của Settle là cộng đồng người Việt ở những nước tụi em có người quen.
 
-Tụi em sẽ tìm họ ở ba nơi. Các nhóm cộng đồng trên Facebook, nơi mỗi ngày đều có người đăng ảnh một tờ giấy và hỏi "cái này là gì". Các công ty đưa người đi lao động. Và các trường tiếng, nơi người ta được hướng dẫn trước khi lên máy bay.
+Tụi em sẽ tìm họ ở ba nơi. Các nhóm cộng đồng trên Facebook, nơi mỗi ngày đều có người đăng ảnh một tờ giấy và hỏi "cái này là gì". Các công ty đưa người đi lao động và du học. Và các trường tiếng, nơi người ta được hướng dẫn trước khi lên máy bay.
 
-Settle đọc được nhiều thứ tiếng ngay từ hôm nay, anh chị vừa thấy tiếng Nhật và tiếng Hàn. Vì vậy để phục vụ một cộng đồng xa xứ khác, tụi em chỉ cần đổi ngôn ngữ hiển thị của app.
+Settle đọc được nhiều thứ tiếng ngay từ hôm nay. Vì vậy để phục vụ một cộng đồng xa xứ khác, tụi em chỉ cần đổi ngôn ngữ hiển thị của app.
 
 ### 4:40 Kết
 
-Quay lại với chị Lan. Lần tới mở hộp thư, chị không phải chờ ai trả lời nữa. Chị chụp một tấm. Mười giây sau chị biết đây là gì, phải làm gì, trước ngày nào, và việc đó đã nằm sẵn trong danh sách.
+Quay lại với Minh. Lần tới mở hộp thư, Minh không phải chờ ai trả lời nữa. Minh chụp một tấm. Chừng mười giây sau Minh biết đây là gì, phải làm gì, trước ngày nào, và việc đó đã nằm sẵn trong danh sách.
 
 Settle. Chụp là xong.
 
@@ -103,11 +123,11 @@ Tụi em cảm ơn anh chị.
 
 ## Câu chỉ thêm khi đã tự kiểm
 
-Những câu dưới đây chưa nằm trong kịch bản vì lúc viết chưa ai kiểm lại. Kiểm xong câu nào thì thêm câu đó.
+Những câu dưới đây chưa nằm trong kịch bản vì lúc viết chưa ai kiểm lại trên điện thoại. Kiểm xong câu nào thì thêm câu đó.
 
-- Nhắc hạn, nếu màn kết quả trên máy hiện "Đã đặt nhắc". Thêm sau câu về câu tiếng Nhật soạn sẵn: "Settle cũng đã tự hẹn nhắc chị trước hạn ba ngày, ngay trên điện thoại."
-- Nghe đọc, nếu bấm thử trên máy có tiếng. Thêm sau câu về giơ điện thoại: "Hoặc chị bấm nút này để máy đọc câu đó thành tiếng." rồi bấm cho giám khảo nghe.
-- Số liệu, nếu đã mở link trong `docs/EVIDENCE.md` và thấy đúng. Thêm vào phần Vấn đề: "Riêng ở Nhật, cuối năm 2025 có hơn 680 nghìn người Việt đang cư trú."
+- Nhắc hạn, nếu màn kết quả trên máy hiện "Đã đặt nhắc". Thêm sau câu về câu tiếng Hàn soạn sẵn: "Settle cũng đã tự hẹn nhắc Minh trước hạn ba ngày, ngay trên điện thoại."
+- Nghe đọc, nếu bấm thử trên máy có tiếng. Thêm sau câu về giơ điện thoại: "Hoặc Minh bấm nút này để máy đọc câu đó thành tiếng." rồi bấm cho giám khảo nghe.
+- Số liệu, nếu đã mở link trong `docs/EVIDENCE.md` và thấy đúng. Chọn một con số và thêm vào phần Vấn đề.
 - Giấy thật, nếu người quen ở nước ngoài đã gửi ảnh. Thay cả phần mở đầu bằng câu chuyện thật của người đó, và nói ở phần Bằng chứng: "Đây là tờ giấy thật mà một người bạn của tụi em ở … gửi sáng nay."
 
 ## Nếu có sự cố
@@ -115,10 +135,10 @@ Những câu dưới đây chưa nằm trong kịch bản vì lúc viết chưa 
 | Chuyện xảy ra | Làm gì, nói gì |
 |---|---|
 | Chụp màn hình laptop bị lóa, app báo ảnh mờ | Bấm Chọn ảnh từ thư viện và chọn ảnh mẫu đã lưu sẵn. "Em dùng tấm ảnh đã chụp sẵn của đúng tờ giấy này." |
-| Quá 15 giây chưa có kết quả | Nói tiếp phần Vì sao tin được trong lúc chờ. |
+| Quá 15 giây chưa có kết quả | Nói trước phần Vì sao tin được trong lúc chờ. |
 | App báo lỗi mạng | Bấm Thử lại một lần. Vẫn lỗi thì phát 4G từ máy khác. |
+| Kết quả khác bảng ở phần Bối cảnh demo | Đọc đúng những gì màn hình hiện, đừng đọc theo trí nhớ. Chỉ vào dòng chữ gốc để giám khảo tự đối chiếu. |
 | Giám khảo đưa một tờ khai trống, không có hạn | App sẽ nhận ra đúng loại giấy và báo Chỉ để biết. "Tờ này không có hạn hay số tiền, nên Settle chỉ ghi nhận đây là giấy gì." |
-| AI đọc sai một con số | Chỉ vào dòng chữ gốc bên dưới. "Đây là lý do mỗi con số đều kèm chữ gốc: người dùng thấy ngay chỗ lệch." |
 
 ## Câu hỏi có thể gặp
 
@@ -135,4 +155,4 @@ Mỗi con số kèm chữ gốc và mức tin cậy. Chỗ chưa chắc được
 Là giấy mẫu tụi em dựng theo bố cục thật, có in dấu mẫu trên mỗi tờ. Phần đọc và xử lý chạy thật ngay trước mặt anh chị, và anh chị có thể đưa tờ giấy của mình để thử.
 
 **Ai trả tiền?**
-Tụi em chưa có khách hàng. Hướng tụi em nhắm tới là các tổ chức đang phải hỗ trợ giấy tờ cho người lao động, như công ty đưa người đi và đơn vị tiếp nhận.
+Tụi em chưa có khách hàng. Hướng tụi em nhắm tới là các tổ chức đang phải hỗ trợ giấy tờ cho người lao động và du học sinh, như công ty đưa người đi và đơn vị tiếp nhận.

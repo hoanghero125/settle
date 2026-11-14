@@ -55,7 +55,7 @@ Every build is signed with the same debug key, so a new APK installs over the ol
 | | Role |
 |---|---|
 | Đỗ Phạm Bảo Hoàng | Lead, platform, evidence, demo |
-| Nguyễn Tiến Hoàng | AI and backend |
-| Phùng Hải Đăng | Mobile UI |
+| Hoàng Quốc Anh | AI and backend |
+| Nguyễn Nam Hải | Mobile UI |
 
 How we work: [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md).

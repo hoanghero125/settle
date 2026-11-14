@@ -65,8 +65,8 @@ camera <input capture> → src/lib/image/downscale.ts (≤1600px JPEG data URL)
 
 | Area | Owner |
 |---|---|
-| `src/lib/ai`, `src/app/api/process`, `src/app/api/feedback`, eval script | Nguyễn Tiến Hoàng |
-| `src/features`, `src/components`, `src/app/page.tsx`, `src/app/globals.css`, `src/lib/store` | Phùng Hải Đăng |
+| `src/lib/ai`, `src/app/api/process`, `src/app/api/feedback`, eval script | Hoàng Quốc Anh |
+| `src/features`, `src/components`, `src/app/page.tsx`, `src/app/globals.css`, `src/lib/store` | Nguyễn Nam Hải |
 | `src/lib/native`, `src/app/api/speech`, `android/`, `.github/`, `docs/`, `src/data` | Đỗ Phạm Bảo Hoàng |
 
 Stay inside the area of the person you are working for. If a task needs a change elsewhere, keep it minimal and call it out in the PR.

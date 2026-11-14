@@ -31,6 +31,8 @@ Kết quả đúng mà app phải cho ra với tờ tiếng Hàn (đã chạy th
 
 Sau khi chụp xong, danh sách sẽ có hai việc: thuế Nhật hạn 18/11 (Cần làm ngay) ở trên, bảo hiểm Hàn hạn 10/12 (Có hạn) ở dưới.
 
+Tờ dự phòng là phiếu nộp thuế thu nhập của Đài Loan (`docs/demo-papers/zh-tw-income-tax.pdf`), dùng khi giám khảo không đưa giấy của họ. Kết quả đúng: giấy nộp thuế thu nhập, 18.300 Đài tệ, hạn 1 tháng 12 năm 2026, mức độ Có hạn, kèm một câu tiếng Trung soạn sẵn. Trên giấy, năm được ghi là 115 theo lịch Dân Quốc và app tự đổi sang 2026. Lần chạy thử thật gần nhất mất 11 giây.
+
 ## Trước khi lên
 
 - Điện thoại bật 4G, tắt wifi, âm lượng lớn, tắt chế độ im lặng, màn hình không tự tắt.
@@ -88,6 +90,10 @@ Việc này đã vào danh sách. Tờ thuế Nhật hạn 18 tháng 11 nằm tr
 [Đưa tay mời giám khảo. Nếu không ai đưa giấy, chụp tờ Đài Loan]
 
 Anh chị vừa thấy tiếng Nhật và tiếng Hàn. Nếu anh chị có một tờ giấy tiếng nước ngoài nào trong túi, mời anh chị đưa em thử.
+
+[Chỉ nói khi chụp tờ Đài Loan, lúc kết quả hiện ra]
+
+Tờ này của Đài Loan. Trên giấy, năm được ghi là 115 theo lịch riêng của họ. Settle tự đổi sang năm 2026 và báo hạn nộp là ngày 1 tháng 12.
 
 ### 3:15 Vì sao tin được
 

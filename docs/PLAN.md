@@ -15,7 +15,7 @@ Hackathon 5 giờ, thời gian còn lại ít. Đề: trải nghiệm di động
 
 **Stack: Next.js + Capacitor.** Đội viết stack quen nhất; APK build một lần, sau đó mọi thay đổi lên máy demo qua Vercel trong khoảng một phút và rollback được ngay. Dự phòng nếu APK Capacitor không chạy ở giai đoạn khởi động: đóng gói bằng PWABuilder.
 
-Tôi tự chọn (sửa nếu sai): Tiến Hoàng làm AI/backend, Hải Đăng làm giao diện; có một máy Android trong tay trong 30 phút đầu.
+Tôi tự chọn (sửa nếu sai): Quốc Anh làm AI/backend, Nam Hải làm giao diện; có một máy Android trong tay trong 30 phút đầu.
 
 ## Sản phẩm
 
@@ -45,9 +45,9 @@ App không tư vấn pháp lý; số điện thoại hỗ trợ lấy từ file 
 | Tiêu chí | Việc làm | Phụ trách |
 |---|---|---|
 | 1 (40) | APK do GitHub Actions build, cài lên máy Android **ngay giai đoạn khởi động**, trước khi có tính năng. Một lời gọi AI, mục tiêu dưới 10 giây. Demo: tắt hẳn app, mở lại, danh sách việc còn nguyên, chụp một giấy mới, đặt nhắc thử sau 30 giây để thông báo nổ ngay trước BGK. Chạy 4G. | Bảo Hoàng |
-| 2 (35) | `docs/EVIDENCE.md`: số liệu có link nguồn; 3–5 giấy tờ thật từ người Việt đang ở nước ngoài gửi qua Messenger hôm nay kèm phản hồi; kết quả chạy bộ mẫu ("xử lý đúng N/M giấy"). | Bảo Hoàng + Tiến Hoàng |
+| 2 (35) | `docs/EVIDENCE.md`: số liệu có link nguồn; 3–5 giấy tờ thật từ người Việt đang ở nước ngoài gửi qua Messenger hôm nay kèm phản hồi; kết quả chạy bộ mẫu ("xử lý đúng N/M giấy"). | Bảo Hoàng + Quốc Anh |
 | 3 (25) | Link web cho bạn bè ở nước ngoài dùng thật từ mốc kiểm tra; bộ đếm ẩn danh và 👍/👎. Người dùng đầu tiên: cộng đồng người Việt ở nước mà đội có người quen (ví dụ Nhật, Hàn, Đài), qua nhóm Facebook cộng đồng, công ty xuất khẩu lao động, trường tiếng. Khách trả tiền: nghiệp đoàn và công ty phái cử, đang trả lương phiên dịch cho đúng việc này. Toàn cầu: sản phẩm đã đọc mọi ngôn ngữ, chứng minh ngay trong demo bằng giấy tờ tiếng Nhật, Hàn, Trung và giấy tờ BGK tự đưa; mở rộng sang cộng đồng di cư khác chỉ cần đổi ngôn ngữ giao diện. | Bảo Hoàng |
-| UI/UX | Hệ thiết kế có sẵn trong scaffold. Hướng thị giác: nền giấy ấm, xanh chàm, đỏ son của con dấu; chữ Be Vietnam Pro, chữ CJK dùng font hệ thống. Đủ trạng thái chờ, trống, lỗi. Cảm giác native: nút Back, splash, thanh trạng thái, rung phản hồi, chuyển cảnh. Một lượt rà thiết kế riêng trước giờ đóng băng. | Hải Đăng |
+| UI/UX | Hệ thiết kế có sẵn trong scaffold. Hướng thị giác: nền giấy ấm, xanh chàm, đỏ son của con dấu; chữ Be Vietnam Pro, chữ CJK dùng font hệ thống. Đủ trạng thái chờ, trống, lỗi. Cảm giác native: nút Back, splash, thanh trạng thái, rung phản hồi, chuyển cảnh. Một lượt rà thiết kế riêng trước giờ đóng băng. | Nam Hải |
 | Tự động hóa | Mọi màn hình nói bằng động từ đã làm ("Đã đặt nhắc", "Đã soạn thư"), không phải lời giải thích. | Cả đội |
 
 ## Kiến trúc
@@ -83,8 +83,8 @@ Làm theo contract trước: scaffold có sẵn schema và fixture, giao diện 
 | Người | Vai trò | Phụ trách |
 |---|---|---|
 | **Đỗ Phạm Bảo Hoàng** | Lead / generalist | Repo, CI, Vercel + key, APK trên máy demo, `src/lib/native` (thông báo, share), route đọc tiếng, bằng chứng và người dùng thật, bộ giấy tờ mẫu, danh bạ hỗ trợ, QA, pitch và demo |
-| **Nguyễn Tiến Hoàng** | AI / backend | `/api/process`, prompt + ghi chú giấy tờ theo nước, xử lý lỗi (timeout, JSON hỏng, từ chối, ảnh mờ, không phải giấy tờ), script chạy bộ mẫu, bộ đếm phản hồi |
-| **Phùng Hải Đăng** | Giao diện | Hệ thiết kế, ba màn hình, chuyển động, các trạng thái, danh sách việc lưu trên máy, khối "Settle đã làm" |
+| **Hoàng Quốc Anh** | AI / backend | `/api/process`, prompt + ghi chú giấy tờ theo nước, xử lý lỗi (timeout, JSON hỏng, từ chối, ảnh mờ, không phải giấy tờ), script chạy bộ mẫu, bộ đếm phản hồi |
+| **Nguyễn Nam Hải** | Giao diện | Hệ thiết kế, ba màn hình, chuyển động, các trạng thái, danh sách việc lưu trên máy, khối "Settle đã làm" |
 
 **Lịch (tổng khoảng 3 giờ; nếu còn ít hơn, cắt Sprint 2 trước)**
 
@@ -101,9 +101,9 @@ Làm theo contract trước: scaffold có sẵn schema và fixture, giao diện 
 
 **Issue tôi tạo, mỗi cái là một bản giao việc cho agent (mục tiêu, file, contract, cách kiểm)**
 
-- M1 Cài được + luồng chính — Bảo Hoàng: Vercel + key + kiểm tra model; APK lên máy demo; bộ giấy tờ mẫu nhiều ngôn ngữ. Tiến Hoàng: `/api/process`; ghi chú giấy tờ theo nước. Hải Đăng: trang chủ + chụp/thu nhỏ ảnh; màn xử lý; màn kết quả.
-- M2 Tự động hóa + người dùng thật — Bảo Hoàng: thông báo nhắc + share; route đọc tiếng; bằng chứng; danh bạ hỗ trợ. Tiến Hoàng: xử lý lỗi; script bộ mẫu; bộ đếm. Hải Đăng: danh sách việc lưu trên máy; khối "Settle đã làm" + Hoàn tác; trạng thái lỗi; cảm giác native.
-- M3 Sẵn sàng demo — Hải Đăng: rà thiết kế. Bảo Hoàng: QA; pitch + kịch bản demo theo từng tiêu chí; README + tag.
+- M1 Cài được + luồng chính — Bảo Hoàng: Vercel + key + kiểm tra model; APK lên máy demo; bộ giấy tờ mẫu nhiều ngôn ngữ. Quốc Anh: `/api/process`; ghi chú giấy tờ theo nước. Nam Hải: trang chủ + chụp/thu nhỏ ảnh; màn xử lý; màn kết quả.
+- M2 Tự động hóa + người dùng thật — Bảo Hoàng: thông báo nhắc + share; route đọc tiếng; bằng chứng; danh bạ hỗ trợ. Quốc Anh: xử lý lỗi; script bộ mẫu; bộ đếm. Nam Hải: danh sách việc lưu trên máy; khối "Settle đã làm" + Hoàn tác; trạng thái lỗi; cảm giác native.
+- M3 Sẵn sàng demo — Nam Hải: rà thiết kế. Bảo Hoàng: QA; pitch + kịch bản demo theo từng tiêu chí; README + tag.
 
 ## Quy trình
 

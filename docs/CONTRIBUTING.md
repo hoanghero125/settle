@@ -17,8 +17,8 @@ PR nhỏ, dưới khoảng 200 dòng, merge thường xuyên. Một PR treo lâu
 
 | Phần | Người |
 |---|---|
-| `src/lib/ai`, `src/app/api/process`, `src/app/api/feedback` | Nguyễn Tiến Hoàng |
-| `src/features`, `src/components`, `src/app/page.tsx`, `src/app/globals.css`, `src/lib/store` | Phùng Hải Đăng |
+| `src/lib/ai`, `src/app/api/process`, `src/app/api/feedback` | Hoàng Quốc Anh |
+| `src/features`, `src/components`, `src/app/page.tsx`, `src/app/globals.css`, `src/lib/store` | Nguyễn Nam Hải |
 | `src/lib/native`, `src/app/api/speech`, `android/`, `.github/`, `docs/`, `src/data` | Đỗ Phạm Bảo Hoàng |
 
 Cần sửa ngoài phần của mình thì sửa ít nhất có thể và ghi rõ trong PR.

@@ -3,11 +3,11 @@ import { residentTaxJa } from "@/fixtures/analyses";
 import type { ApiErrorCode, ProcessRequest } from "@/lib/contracts";
 import { getOpenAI } from "./client";
 import { analyzePaperwork, PaperworkProcessingError } from "./analyze-paperwork";
-import { getVisionModel } from "./models";
+import { getModels } from "./models";
 import { IMAGE_UNREADABLE_REASON } from "./prompt";
 
 vi.mock("./client", () => ({ getOpenAI: vi.fn() }));
-vi.mock("./models", () => ({ getVisionModel: vi.fn() }));
+vi.mock("./models", () => ({ getModels: vi.fn() }));
 
 const input: ProcessRequest = {
   image: "data:image/jpeg;base64,AA==",
@@ -16,7 +16,7 @@ const input: ProcessRequest = {
 };
 
 const mockedGetOpenAI = vi.mocked(getOpenAI);
-const mockedGetVisionModel = vi.mocked(getVisionModel);
+const mockedGetModels = vi.mocked(getModels);
 const parse = vi.fn();
 const client = { responses: { parse } };
 
@@ -28,7 +28,7 @@ describe("analyzePaperwork", () => {
   beforeEach(() => {
     vi.resetAllMocks();
     mockedGetOpenAI.mockReturnValue(client as never);
-    mockedGetVisionModel.mockReturnValue("vision-model");
+    mockedGetModels.mockReturnValue({ vision: "vision-model", speech: "speech-model" });
   });
 
   it("reports missing server configuration before calling OpenAI", async () => {
@@ -78,5 +78,14 @@ describe("analyzePaperwork", () => {
     });
 
     await expectError(analyzePaperwork(input), "model_refused");
+  });
+
+  it("retries exactly once when structured output is invalid", async () => {
+    parse
+      .mockResolvedValueOnce({ output: [], output_parsed: null })
+      .mockResolvedValueOnce({ output: [], output_parsed: residentTaxJa });
+
+    await expect(analyzePaperwork(input)).resolves.toEqual(residentTaxJa);
+    expect(parse).toHaveBeenCalledTimes(2);
   });
 });

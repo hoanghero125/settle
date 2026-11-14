@@ -1,5 +1,5 @@
 import { FeedbackRequestSchema } from "@/lib/contracts";
-import { recordFeedback } from "@/lib/ai/feedback";
+import { getFeedbackCounts, incrementMetric } from "@/lib/ai/feedback";
 import { errorResponse } from "@/lib/server/respond";
 
 /**
@@ -13,6 +13,12 @@ export async function POST(request: Request): Promise<Response> {
     typeof body === "object" && body !== null && !Array.isArray(body) && Object.keys(body).length === 1 && "verdict" in body;
   if (!parsed.success || !hasOnlyVerdict) return errorResponse("bad_request");
 
-  recordFeedback(parsed.data.verdict);
+  await incrementMetric(parsed.data.verdict);
   return new Response(null, { status: 204 });
+}
+
+/** Aggregate proof of use for the pitch. No document content is ever returned. */
+export async function GET(): Promise<Response> {
+  const counts = await getFeedbackCounts();
+  return Response.json(counts, { headers: { "cache-control": "no-store" } });
 }

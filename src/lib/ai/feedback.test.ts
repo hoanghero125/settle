@@ -1,22 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { createFeedbackCounter } from "./feedback";
+import { getFeedbackCounts, incrementMetric } from "./feedback";
 
-describe("feedback counter", () => {
-  it("counts only anonymous verdicts", () => {
-    const counter = createFeedbackCounter();
-
-    counter.record("up");
-    counter.record("up");
-    counter.record("down");
-
-    expect(counter.snapshot()).toEqual({ up: 2, down: 1 });
+describe("feedback metrics without Redis", () => {
+  it("does not fail the user flow when storage is absent", async () => {
+    await expect(incrementMetric("processed")).resolves.toBeUndefined();
+    await expect(incrementMetric("up")).resolves.toBeUndefined();
   });
 
-  it("returns a copy rather than exposing mutable internal state", () => {
-    const counter = createFeedbackCounter();
-    const snapshot = counter.snapshot();
-    snapshot.up = 99;
-
-    expect(counter.snapshot()).toEqual({ up: 0, down: 0 });
+  it("returns only anonymous aggregate defaults when storage is absent", async () => {
+    await expect(getFeedbackCounts()).resolves.toEqual({ processed: 0, up: 0, down: 0 });
   });
 });

@@ -11,7 +11,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check:models": "node --env-file=.env.local scripts/check-models.mjs",
-    "evaluate": "node scripts/evaluate.mjs",
+    "eval": "node scripts/eval.mjs",
     "android:sync": "cap sync android"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "@capacitor/share": "^8.0.3",
     "@capacitor/splash-screen": "^8.0.2",
     "@capacitor/status-bar": "^8.0.4",
+    "@upstash/redis": "^1.41.0",
     "next": "16.4.6",
     "openai": "^7.57.0",
     "react": "19.3.0",

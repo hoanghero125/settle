@@ -1,4 +1,3 @@
-import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
 import {
   PaperworkAnalysisSchema,
@@ -7,8 +6,9 @@ import {
   type ProcessRequest,
 } from "@/lib/contracts";
 import { getOpenAI } from "./client";
-import { getVisionModel } from "./models";
+import { getModels } from "./models";
 import { buildPaperworkInstructions, IMAGE_UNREADABLE_REASON } from "./prompt";
+import { mapOpenAIError } from "@/lib/server/openai-errors";
 
 /** A known processing failure that a route can translate with errorResponse. */
 export class PaperworkProcessingError extends Error {
@@ -16,19 +16,6 @@ export class PaperworkProcessingError extends Error {
     super(code);
     this.name = "PaperworkProcessingError";
   }
-}
-
-function toErrorCode(error: unknown): ApiErrorCode {
-  if (error instanceof PaperworkProcessingError) return error.code;
-  if (error instanceof OpenAI.RateLimitError) return "rate_limited";
-  if (error instanceof OpenAI.APIConnectionTimeoutError) return "timeout";
-  if (error instanceof OpenAI.APIConnectionError) return "network";
-  if (error instanceof OpenAI.AuthenticationError || error instanceof OpenAI.PermissionDeniedError) {
-    return "not_configured";
-  }
-  if (error instanceof OpenAI.BadRequestError) return "bad_request";
-  if (error instanceof OpenAI.UnprocessableEntityError) return "image_unreadable";
-  return "internal";
 }
 
 function wasRefused(response: { output: Array<{ type: string; content?: Array<{ type: string }> }> }): boolean {
@@ -51,41 +38,42 @@ function applyReminderSafety(analysis: PaperworkAnalysis): PaperworkAnalysis {
  */
 export async function analyzePaperwork(request: ProcessRequest): Promise<PaperworkAnalysis> {
   const client = getOpenAI();
-  const model = getVisionModel();
-  if (!client || !model) throw new PaperworkProcessingError("not_configured");
+  const models = getModels();
+  if (!client || !models) throw new PaperworkProcessingError("not_configured");
 
   try {
-    const response = await client.responses.parse({
-      model,
-      store: false,
-      instructions: buildPaperworkInstructions(request),
-      input: [
-        {
-          role: "user",
-          content: [
-            { type: "input_text", text: "Process this photographed paper." },
-            { type: "input_image", image_url: request.image, detail: "high" },
-          ],
-        },
-      ],
-      text: { format: zodTextFormat(PaperworkAnalysisSchema, "paperwork_analysis") },
-    });
+    // Structured-output parse failures are the only retryable model result.
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const response = await client.responses.parse({
+        model: models.vision,
+        store: false,
+        instructions: buildPaperworkInstructions(request),
+        input: [
+          {
+            role: "user",
+            content: [
+              { type: "input_text", text: "Process this photographed paper." },
+              { type: "input_image", image_url: request.image, detail: "high" },
+            ],
+          },
+        ],
+        text: { format: zodTextFormat(PaperworkAnalysisSchema, "paperwork_analysis") },
+      });
 
-    if (wasRefused(response)) throw new PaperworkProcessingError("model_refused");
-    if (!response.output_parsed) throw new PaperworkProcessingError("invalid_model_output");
-
-    // Parse again at the boundary: the contract, not an SDK type, is authoritative.
-    const parsed = PaperworkAnalysisSchema.safeParse(response.output_parsed);
-    if (!parsed.success) throw new PaperworkProcessingError("invalid_model_output");
-    if (!parsed.data.isPaperwork && !parsed.data.notPaperworkReason) {
-      throw new PaperworkProcessingError("invalid_model_output");
+      if (wasRefused(response)) throw new PaperworkProcessingError("model_refused");
+      const parsed = PaperworkAnalysisSchema.safeParse(response.output_parsed);
+      if (parsed.success && (parsed.data.isPaperwork || parsed.data.notPaperworkReason)) {
+        if (parsed.data.notPaperworkReason === IMAGE_UNREADABLE_REASON) {
+          throw new PaperworkProcessingError("image_unreadable");
+        }
+        return applyReminderSafety(parsed.data);
+      }
+      if (attempt === 1) throw new PaperworkProcessingError("invalid_model_output");
     }
-    if (parsed.data.notPaperworkReason === IMAGE_UNREADABLE_REASON) {
-      throw new PaperworkProcessingError("image_unreadable");
-    }
 
-    return applyReminderSafety(parsed.data);
+    throw new PaperworkProcessingError("invalid_model_output");
   } catch (error) {
-    throw new PaperworkProcessingError(toErrorCode(error));
+    if (error instanceof PaperworkProcessingError) throw error;
+    throw new PaperworkProcessingError(mapOpenAIError(error));
   }
 }
